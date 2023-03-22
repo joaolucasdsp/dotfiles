@@ -32,7 +32,7 @@ in
     userEmail = "joao_pereira@gec.inatel.br";
     package = pkgs.gitFull;
 
-    signing.key = "0x297A9768C8CA96AB";
+    signing.key = "0x037C9055AB60EB81";
     signing.signByDefault = true;
 
     extraConfig = {
