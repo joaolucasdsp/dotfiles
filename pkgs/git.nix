@@ -28,8 +28,8 @@ in
   programs.git = {
     enable = true;
 
-    userName = "Vinícius Müller";
-    userEmail = "vinigm.nho@gmail.com";
+    userName = "Joao Lucas";
+    userEmail = "joao_pereira@gec.inatel.br";
     package = pkgs.gitFull;
 
     signing.key = "0x297A9768C8CA96AB";
