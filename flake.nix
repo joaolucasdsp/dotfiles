@@ -55,6 +55,11 @@
             ];
             colorscheme = inputs.nix-colors.colorSchemes.nord;
           };
+          arch = lib.mkHome {
+            inherit system username;
+            name = "arch";
+            colorscheme = inputs.nix-colors.colorSchemes.nord;
+          };
           wsl = lib.mkHome {
             inherit system username;
             name = "wsl";
