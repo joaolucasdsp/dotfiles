@@ -46,6 +46,9 @@ in
     file # Shows info about files
     neofetch # Shows system information
     pfetch # Smaller neofetch
+
+    # take notes
+    nb
   ];
 
   programs.bash = shellConfig;
