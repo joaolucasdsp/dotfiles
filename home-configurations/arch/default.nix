@@ -13,11 +13,18 @@ let
     fd # File finder
     unzip # Easily unzip files
     pfetch # lightweight neofetch
+
+    # nb notes
+    nb
+
+    # lean version manager
+    elan
   ];
   gui = with pkgs; [
     retroarch
     okular # ebook reader
     sioyek # technical paper reader
+    dbeaver
   ];
   games = with pkgs; [ ];
   proprietary = with pkgs; [ ];
@@ -46,7 +53,7 @@ in
 
     ../../pkgs/direnv.nix # Manages project environments
     #../../pkgs/keychain.nix
-    ../../pkgs/gpg.nix
+    #../../pkgs/gpg.nix
     ../../pkgs/jq.nix # Work with json
     ../../pkgs/nnn.nix # File manager
     ../../pkgs/tiny.nix # IRC Client
@@ -67,7 +74,7 @@ in
 
   programs.bash = {
     shellAliases = {
-      rb = "nix build --impure .#homeConfigurations.debian.activationPackage && result/activate";
+      rb = "nix build --impure .#homeConfigurations.arch.activationPackage && result/activate";
     };
   };
 

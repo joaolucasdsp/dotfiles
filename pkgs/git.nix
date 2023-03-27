@@ -32,8 +32,8 @@ in
     userEmail = "joao_pereira@gec.inatel.br";
     package = pkgs.gitFull;
 
-    signing.key = "0x037C9055AB60EB81";
-    signing.signByDefault = true;
+    signing.key = "0xA6CD679D10138E4B";
+    signing.signByDefault = false;
 
     extraConfig = {
       core.editor = "vim";
