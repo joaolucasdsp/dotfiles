@@ -1,23 +1,18 @@
 {
-  inputs.lean4.url = "github:leanprover/lean4";
-  inputs.lean4.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
+  description = "Lean4 flake nix";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    lean4.url = "github:leanprover/lean4";
+  };
   outputs = { self, nixpkgs, lean4 }:
     let
       pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ lean4.overlay ];
+        system = "x86_64-linux";
       };
-      system = "x86_64-linux";
-    in
-    {
-      devShell = pkgs.mkShell {
+    in {
+      devShells."x86_64-linux".default = pkgs.mkShell {
         name = "lean4-devshell";
-        buildInputs = [
-          pkgs.lean4
-        ];
+        buildInputs = [ lean4.defaultPackage."x86_64-linux"];
       };
-
-      lean4 = pkgs.lean4;
     };
 }
