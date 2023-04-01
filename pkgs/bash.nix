@@ -85,6 +85,7 @@ in
       nq = "nix search nixpkgs";
       nd = "nix develop";
       cvi = "convco commit --interactive";
+      rofi-show = "rofi -show drun -theme ~/dotfiles/pkgs/rofi/configs/launchers/type-6/style-4.rasi";
     };
   };
 

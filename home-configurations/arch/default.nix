@@ -31,6 +31,11 @@ let
 in
 {
   imports = [
+
+    # just import my awesome config
+    # but still need to manually install awesome
+    ../../desktop/awesome
+
     ../../utils/scripts
     # ../../profiles/haskell # ghci customization
 

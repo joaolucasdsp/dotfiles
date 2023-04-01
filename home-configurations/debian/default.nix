@@ -31,15 +31,21 @@ let
   gui = with pkgs; [
     retroarch
     okular # ebook reader
+    spotify
     (nixGLWrap anki-bin) # Spaced repetition
     (nixGLWrap beekeeper-studio) # database client
     sioyek # technical paper reader
   ];
   games = with pkgs; [ ];
-  proprietary = with pkgs; [ discord ];
+  proprietary = with pkgs; [ ];
 in
 {
   imports = [
+
+    # just import my awesome config
+    # but still need to manually install awesome
+    ../../desktop/awesome
+
     ../../utils/scripts
     # ../../profiles/haskell # ghci customization
 
@@ -50,7 +56,6 @@ in
     ../../pkgs/zoxide.nix # Jump directories
 
     ../../pkgs/editors/nvim # Modal text editor
-    ../../pkgs/editors/vscodium # Text editor
 
     ../../pkgs/readline # GNU readline input
     ../../pkgs/git.nix
@@ -73,6 +78,7 @@ in
     # GUI
     # ../../pkgs/wayst.nix # terminal emulator
     ../../pkgs/kitty.nix
+    ../../pkgs/rofi
     # ../../pkgs/pomatez.nix
     # ../../pkgs/mangohud.nix
     # ../../pkgs/editors/emacs # Another text editor
