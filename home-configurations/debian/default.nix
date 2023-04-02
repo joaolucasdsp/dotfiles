@@ -94,13 +94,13 @@ in
     # ../../pkgs/games/dwarf-fortress
   ];
 
-  services.redshift = {
-    enable = true;
-    dawnTime = "6:00-7:45";
-    duskTime = "18:35-20:15";
-    temperature.day = 4500;
-    temperature.night = 2800;
-  };
+  # services.redshift = {
+  #   enable = true;
+  #   dawnTime = "6:00-7:45";
+  #   duskTime = "18:35-20:15";
+  #   temperature.day = 4500;
+  #   temperature.night = 2800;
+  # };
 
   programs.kitty.package = nixGLWrap pkgs.kitty;
 
@@ -109,12 +109,6 @@ in
     # initExtra = ". ~/.nix-profile/etc/profile.d/nix.sh";
     shellAliases = {
       rb = "nix build --impure .#homeConfigurations.debian.activationPackage && result/activate";
-    };
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/wm/preferences" = {
-      "button-layout" = ":minimize,maximize,close";
     };
   };
 
