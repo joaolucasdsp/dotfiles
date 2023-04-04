@@ -16,7 +16,7 @@ in
     ./plugins/lspconfig.nix
     # ./plugins/lsp_lines.nix
 
-    # ./lsp/omnisharp.nix
+    ./lsp/omnisharp.nix
     ./lsp/go.nix
     ./lsp/erlang.nix
     ./lsp/fsharp.nix

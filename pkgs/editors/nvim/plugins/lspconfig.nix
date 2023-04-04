@@ -70,7 +70,7 @@ let
         buf_set_keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
 
         buf_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
-        buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
+        buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", opts)
         buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
         buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.workspace_symbol("")<cr>', opts)
         buf_set_keymap('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
