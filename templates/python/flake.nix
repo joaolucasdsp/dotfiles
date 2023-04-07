@@ -26,7 +26,7 @@
                   };
                   # https://devenv.sh/reference/options/
                   packages = with pkgs; [
-
+                    rnix-lsp
                   ];
 
                   enterShell = ''
