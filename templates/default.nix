@@ -7,7 +7,13 @@
 
   # nix flake init -t github:joaolucasete/dotfiles#templates.lean4
   lean4 = {
-    description = "Lean4 Project Template";
+    description = "A lean4 project template";
     path = ./lean4;
+  };
+
+  # nix flake init -t github:joaolucasete/dotfiles#templates.python
+  python = {
+    description = "A python project template using devenv";
+    path = ./python;
   };
 }

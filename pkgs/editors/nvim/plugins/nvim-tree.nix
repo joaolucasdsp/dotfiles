@@ -6,6 +6,9 @@ let
     config = ''
       ${prelude.mkLuaCode ''
         require('nvim-tree').setup {
+          git = {
+            ignore = false,
+          },
           open_on_setup       = false,
           renderer = {
             icons = {
