@@ -32,6 +32,7 @@ in
     ../../pkgs/bat.nix # File previewer
     ../../pkgs/newsboat.nix # News reader
     ../../pkgs/tiny.nix # TUI IRC client
+    ../../pkgs/direnv.nix
 
     #../../services/gpg-agent.nix
   ];
@@ -49,6 +50,9 @@ in
 
     # take notes
     nb
+
+    ffmpeg
+    espeak-classic
   ];
 
   programs.bash = shellConfig;
