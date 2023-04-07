@@ -26,6 +26,7 @@
                   };
                   # https://devenv.sh/reference/options/
                   packages = with pkgs; [
+                    python310Packages.jedi-language-server # python lsp neovim
                     rnix-lsp
                   ];
 

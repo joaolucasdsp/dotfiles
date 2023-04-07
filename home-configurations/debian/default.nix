@@ -27,6 +27,7 @@ let
     neofetch
     pfetch # lightweight neofetch
     restic # backups
+    commitizen # tool to create committing rules for projects
   ];
   gui = with pkgs; [
     retroarch
