@@ -16,4 +16,10 @@
     description = "A python project template using devenv";
     path = ./python;
   };
+
+  # nix flake init -t github:joaolucasete/dotfiles#templates.devenv
+  devenv = {
+    description = "A simple devenv flake";
+    path = ./devenv;
+  };
 }
