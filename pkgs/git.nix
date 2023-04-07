@@ -46,7 +46,7 @@ in
     ignores = [
       "*~" 
       "*.swp"
-      ".envrc"
+      # ".envrc"
       ".direnv"
     ];
 
