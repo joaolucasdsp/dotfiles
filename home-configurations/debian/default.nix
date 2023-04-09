@@ -28,6 +28,7 @@ let
     pfetch # lightweight neofetch
     restic # backups
     commitizen # tool to create committing rules for projects
+    mpv # media player
   ];
   gui = with pkgs; [
     retroarch

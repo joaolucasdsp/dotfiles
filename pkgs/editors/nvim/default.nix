@@ -36,6 +36,7 @@ in
     # ./plugins/nvim-lint.nix
 
     # ---- General plugins ----
+    ./plugins/typewriter.nix
 
     # Utils
     # ./plugins/tree-sitter.nix
@@ -66,6 +67,9 @@ in
     # Aesthetic
     ./colorschemes/onedark.nix
     ./plugins/todo-comments.nix
+
+    # nvim tabs
+    ./plugins/barbar.nix
   ];
 
   programs.neovim = {
@@ -80,6 +84,8 @@ in
       vim-sensible
       vim-surround
       vim-tmux-navigator
+      nvim-web-devicons
+      nvim-dap
     ];
 
     extraPackages = with pkgs; [
