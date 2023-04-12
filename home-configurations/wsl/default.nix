@@ -53,6 +53,7 @@ in
 
     ffmpeg
     espeak-classic
+    mpv
   ];
 
   programs.bash = shellConfig;

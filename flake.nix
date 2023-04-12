@@ -38,6 +38,30 @@
       );
     in
     {
+      nixosConfigurations = {
+        nixos = let 
+          system = "x86_64-linux";
+          pkgs-master = lib.mkNixpkgs {
+            inherit system;
+            nixpkgs = nixpkgs-master;
+          };
+          discord-overlay = final: prev: {
+            discord = pkgs-master.discord;
+          };
+        in lib.mkHost {
+          inherit system;
+          host = "nixos";
+          username = "codando";
+          overlays = [
+            inputs.suckless.overlays
+            discord-overlay
+          ];
+          homeModules = [
+            nix-colors.homeManagerModule
+          ];
+          colorscheme = inputs.nix-colors.colorSchemes.nord;
+        };
+      };
       
       homeConfigurations =
         let

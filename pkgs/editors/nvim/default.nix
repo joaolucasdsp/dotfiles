@@ -36,7 +36,7 @@ in
     # ./plugins/nvim-lint.nix
 
     # ---- General plugins ----
-    ./plugins/typewriter.nix
+    # ./plugins/typewriter.nix
 
     # Utils
     # ./plugins/tree-sitter.nix
@@ -69,7 +69,7 @@ in
     ./plugins/todo-comments.nix
 
     # nvim tabs
-    ./plugins/barbar.nix
+    # ./plugins/barbar.nix
   ];
 
   programs.neovim = {
