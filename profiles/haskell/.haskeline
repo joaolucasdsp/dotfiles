@@ -1,0 +1,9 @@
+editMode: Vi
+
+bind: ctrl-p up
+bind: ctrl-n down
+bind: ctrl-r : r return
+
+bind: { { } left
+bind: ( ( ) left
+bind: [ [ ] left
