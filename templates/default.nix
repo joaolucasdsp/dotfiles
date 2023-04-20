@@ -22,4 +22,10 @@
     description = "A simple devenv flake";
     path = ./devenv;
   };
+
+  # nix flake init -t github:joaolucasete/dotfiles#templates.c
+  c = {
+    description = "A simple C flake";
+    path = ./c;
+  };
 }
