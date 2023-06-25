@@ -2,7 +2,7 @@
 
 let
   rebuild-alias = {
-    rb = "sudo nixos-rebuild switch --flake '.#nixos'";
+    rb = "sudo nixos-rebuild switch --flake '.#nixos' --impure";
   };
   fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -22,9 +22,9 @@ let
     minikube
   ];
   gui = with pkgs; [
-    retroarch
+    # retroarch
     jetbrains.rider # code editor
-    lapce # code editor
+    # lapce # code editor
     okular # ebook reader
     thunderbird # email client
     insomnia # Request testing
@@ -33,14 +33,17 @@ let
     gnome.gnome-calendar # calendar
     anki-bin # Spaced repetition
     # krita # Digital art
-    firefox # browser
+    # firefox # browser
+    microsoft-edge # browser
     calibre # Ebook manager
     element-desktop # Matrix client
     logseq # Note taking app
-    godot_4 # Game engine
-    libresprite # pixel art editor
-    antimicroX # convert joystick input to keyboard input
+    # godot_4 # Game engine
+    # libresprite # pixel art editor
+    # antimicroX # convert joystick input to keyboard input
     sioyek # technical paper reader
+    wpsoffice
+
   ];
   games = with pkgs; [
     # nethack
@@ -48,8 +51,10 @@ let
   ];
   proprietary = with pkgs; [
     discord
-    zoom-us
-    # spotify
+    # zoom-us
+    spotify
+    vscode
+    google-chrome
   ];
 in
 {
@@ -79,12 +84,12 @@ in
     ../../pkgs/nnn.nix # File manager
     ../../pkgs/tiny.nix # IRC Client
     ../../services/gpg-agent.nix
-    ../../services/gammastep.nix # Screen temperature manager
+    # ../../services/gammastep.nix # Screen temperature manager
 
     # GUI
     # ../../pkgs/wayst.nix # terminal emulator
     ../../pkgs/kitty.nix
-    ../../pkgs/editors/vscodium # Text editor
+    # ../../pkgs/editors/vscodium # Text editor
     ../../pkgs/pomatez.nix
     ../../pkgs/mangohud.nix
     # ../../pkgs/editors/emacs # Another text editor

@@ -1,3 +1,18 @@
+{ pkgs, username, ... }:
+
 {
-    home.file.".config/awesome".source = "/home/codando/dotfiles/desktop/awesome/configs";
+  home-manager.users.${username} = {
+    imports = [
+      ../../services/flameshot.nix
+    ];
+
+    home.packages = with pkgs; [
+      dmenu
+      rofi
+      arandr
+    ];
+
+    home.file.".config/awesome".source = "/home/joaop/dotfiles/desktop/awesome/configs";
+  };
 }
+

@@ -269,8 +269,6 @@ return require('packer').startup(function(use)
             require('nvim-tree').setup {
                 disable_netrw       = true,
                 hijack_netrw        = true,
-                open_on_setup       = false,
-                ignore_ft_on_setup  = {},
                 hijack_directories  = {
                     enable = true,
                     auto_open = true,

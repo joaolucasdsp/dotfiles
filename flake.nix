@@ -51,7 +51,7 @@
         in lib.mkHost {
           inherit system;
           host = "nixos";
-          username = "codando";
+          username = "joaop";
           overlays = [
             inputs.suckless.overlays
             discord-overlay
@@ -66,7 +66,7 @@
       homeConfigurations =
         let
           system = "x86_64-linux";
-          username = "codando";
+          username = "joaop";
         in
         {
 			# nix build ".#homeConfigurations.debian.activationPackage" --impure

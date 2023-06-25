@@ -13,6 +13,7 @@
     ../../nixos-pkgs/virt-manager.nix
     ../../nixos-pkgs/steam.nix
     # ../../desktop/i3
+    # ../../desktop/awesome
 
     # Grub
     ../../nixos-pkgs/grub/os-prober.nix
@@ -30,7 +31,6 @@
   services.devmon.enable = true;
   services.udisks2.enable = true;
 
-  hardware.pulseaudio.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
@@ -39,13 +39,14 @@
   services.xserver = {
     enable = true;
     desktopManager = {
-      gnome = true;
+      gnome.enable = true;
     };
+    windowManager.awesome.enable = true;
     libinput.enable = true;
 
     displayManager = {
-      gdm.enable = true;
-      # lightdm.enable = true;
+      # gdm.enable = true;
+      lightdm.enable = true;
       # defaultSession = "cinnamon";
       # setupCommands = ''
       #   LEFT='DP-5'
@@ -55,7 +56,8 @@
     };
 
     videoDrivers = [ "nvidia" ];
-    layout = "pt";
+    layout = "us";
+    xkbVariant = "";
   };
 
   services.dbus.packages = with pkgs; [ dconf ];
@@ -114,7 +116,7 @@
   };
 
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
   };
 
@@ -141,27 +143,41 @@
   time.timeZone = "America/Sao_Paulo";
 
   # Select internationalisation properties.
-#   i18n.defaultLocale = "en_US.UTF-8";
-#   console = {
-#     font = "Lat2-Terminus16";
-#     keyMap = "us";
-#   };
+  i18n.defaultLocale = "en_US.UTF-8";
 
-  # Audio with pipewire
-  #security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_BR.UTF-8";
+    LC_IDENTIFICATION = "pt_BR.UTF-8";
+    LC_MEASUREMENT = "pt_BR.UTF-8";
+    LC_MONETARY = "pt_BR.UTF-8";
+    LC_NAME = "pt_BR.UTF-8";
+    LC_NUMERIC = "pt_BR.UTF-8";
+    LC_PAPER = "pt_BR.UTF-8";
+    LC_TELEPHONE = "pt_BR.UTF-8";
+    LC_TIME = "pt_BR.UTF-8";
+  };
 
-  #  # Wireplumber
-  #  wireplumber.enable = true;
-  #  media-session.enable = false;
+    # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
 
-  #  # If you want to use JACK applications, uncomment this
-  #  #jack.enable = true;
-  #};
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  # systemd.services."getty@tty1".enable = false;
+  # systemd.services."autovt@tty1".enable = false;
+
 
   users.users.${username} = {
     isNormalUser = true;
@@ -175,5 +191,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 }

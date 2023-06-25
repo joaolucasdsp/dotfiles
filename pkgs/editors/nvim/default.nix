@@ -31,6 +31,7 @@ in
     ./lsp/python.nix
     ./lsp/rnix.nix
     ./lsp/ccls.nix
+    ./lsp/crystalline.nix
 
     # ---- Linting ----
     # ./plugins/nvim-lint.nix
@@ -86,6 +87,7 @@ in
       vim-tmux-navigator
       nvim-web-devicons
       nvim-dap
+      vim-crystal
     ];
 
     extraPackages = with pkgs; [
