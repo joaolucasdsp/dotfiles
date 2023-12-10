@@ -38,6 +38,7 @@ in
 
     # ---- General plugins ----
     # ./plugins/typewriter.nix
+    ./plugins/copilot.nix
 
     # Utils
     # ./plugins/tree-sitter.nix
