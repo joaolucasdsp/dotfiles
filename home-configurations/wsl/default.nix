@@ -23,7 +23,7 @@ in
     ../../pkgs/git.nix
     ../../pkgs/tmux # Terminal multiplexer
     ../../pkgs/fzf.nix # Fuzzy finder
-    ../../pkgs/exa.nix # ls alternative
+    ../../pkgs/eza.nix # ls alternative
     ../../pkgs/trash-cli.nix # Safer rm
     ../../pkgs/htop.nix # Process viewer
     #../../pkgs/keychain.nix # Ssh key caching

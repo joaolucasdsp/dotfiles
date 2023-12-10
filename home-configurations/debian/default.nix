@@ -64,7 +64,7 @@ in
     ../../pkgs/tmux # Terminal multiplexer
     ../../pkgs/fzf.nix # Fuzzy finder
     ../../pkgs/bat.nix # File previewer
-    ../../pkgs/exa.nix # ls alternative
+    ../../pkgs/eza.nix # ls alternative
     ../../pkgs/newsboat.nix # RSS Reader
     ../../pkgs/trash-cli.nix # Safer rm
     # ../../pkgs/lazygit.nix # Git TUI client
