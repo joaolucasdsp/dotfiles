@@ -38,7 +38,6 @@ in
 
     # ---- General plugins ----
     # ./plugins/typewriter.nix
-    ./plugins/copilot.nix
 
     # Utils
     # ./plugins/tree-sitter.nix
@@ -89,6 +88,7 @@ in
       nvim-web-devicons
       nvim-dap
       vim-crystal
+      copilot-vim
     ];
 
     extraPackages = with pkgs; [
