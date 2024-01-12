@@ -1,18 +1,6 @@
 { config, pkgs, lib, username, ... }:
 
 let
-  nixgl = pkgs.nixgl;
-  nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" {} ''
-    mkdir $out
-    ln -s ${pkg}/* $out
-    rm $out/bin
-    mkdir $out/bin
-    for bin in ${pkg}/bin/*; do
-     wrapped_bin=$out/bin/$(basename $bin)
-     echo "exec ${lib.getExe nixgl.auto.nixGLDefault} $bin \$@" > $wrapped_bin
-     chmod +x $wrapped_bin
-    done
-  '';
   fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
@@ -34,8 +22,6 @@ let
     retroarch
     okular # ebook reader
     spotify
-    (nixGLWrap anki-bin) # Spaced repetition
-    (nixGLWrap beekeeper-studio) # database client
     sioyek # technical paper reader
   ];
   games = with pkgs; [ ];
@@ -79,7 +65,7 @@ in
 
     # GUI
     # ../../pkgs/wayst.nix # terminal emulator
-    ../../pkgs/kitty.nix
+    # ../../pkgs/kitty.nix
     ../../pkgs/rofi
     # ../../pkgs/pomatez.nix
     # ../../pkgs/mangohud.nix
@@ -95,16 +81,6 @@ in
     # Games
     # ../../pkgs/games/dwarf-fortress
   ];
-
-  # services.redshift = {
-  #   enable = true;
-  #   dawnTime = "6:00-7:45";
-  #   duskTime = "18:35-20:15";
-  #   temperature.day = 4500;
-  #   temperature.night = 2800;
-  # };
-
-  programs.kitty.package = nixGLWrap pkgs.kitty;
 
   programs.bash = {
     # Source nix

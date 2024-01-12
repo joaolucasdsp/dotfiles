@@ -22,14 +22,11 @@
                     # put programming languages here
                   };
 
-                  # https://devenv.sh/reference/options/#servicesopensearchsettingstransportport
-                  services = {
-                    # put services here
-                  };
-
                   # https://devenv.sh/reference/options/
-                  packages = [
+                  packages = with pkgs; [
                     # put your packages here
+                    
+                    rnix-lsp
                   ];
 
                   enterShell = ''

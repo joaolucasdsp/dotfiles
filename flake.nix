@@ -10,15 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixgl.url = "github:guibou/nixGL";
-
     # Misc
     suckless.url = "github:arcticlimer/suckless";
     nix-colors.url = "github:misterio77/nix-colors";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-	 outputs = { self, flake-utils, nixpkgs, nix-colors, nixpkgs-master, nixgl, ... } @inputs:
+	 outputs = { self, flake-utils, nixpkgs, nix-colors, nixpkgs-master, ... } @inputs:
     let
       lib = import ./lib inputs;
       devShells = flake-utils.lib.eachDefaultSystem (
@@ -66,7 +64,7 @@
       homeConfigurations =
         let
           system = "x86_64-linux";
-          username = "codando";
+          username = "jonhp";
         in
         {
 			# nix build ".#homeConfigurations.debian.activationPackage" --impure
@@ -74,7 +72,6 @@
             inherit system username;
             name = "debian";
             overlays = [
-              nixgl.overlay
               inputs.suckless.overlays
             ];
             colorscheme = inputs.nix-colors.colorSchemes.nord;
