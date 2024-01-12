@@ -14,8 +14,8 @@ in
 
       mkdir -p ~/.ssh
 
-      ${bw} get item --session "$key" SSH_PRIV | ${jq} -r '.notes' > "$private"
-      ${bw} get item --session "$key" SSH_PUB | ${jq} -r '.notes' > "$public"
+      ${bw} get item --session "$key" SSH_ED25519_PRIV | ${jq} -r '.notes' > "$private"
+      ${bw} get item --session "$key" SSH_ED25519_PUB | ${jq} -r '.notes' > "$public"
 
       ${bw} lock
 

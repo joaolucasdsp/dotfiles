@@ -20,30 +20,38 @@ let
     git-imerge
     kubectl
     minikube
+    ntfs3g
+    lazydocker
   ];
   gui = with pkgs; [
     # retroarch
-    jetbrains.rider # code editor
     # lapce # code editor
     okular # ebook reader
     thunderbird # email client
     insomnia # Request testing
     beekeeper-studio # database client
-    gnome-solanum # pomodoro timer
-    gnome.gnome-calendar # calendar
     anki-bin # Spaced repetition
     # krita # Digital art
     # firefox # browser
     microsoft-edge # browser
     calibre # Ebook manager
     element-desktop # Matrix client
-    logseq # Note taking app
+    #logseq # Note taking app
     # godot_4 # Game engine
     # libresprite # pixel art editor
     # antimicroX # convert joystick input to keyboard input
     sioyek # technical paper reader
     wpsoffice
 
+    gitkraken
+    dbeaver
+
+    #gnome
+    gnome.gnome-tweaks
+    gnome-solanum # pomodoro timer
+    gnome.gnome-calendar # calendar
+
+    firefox
   ];
   games = with pkgs; [
     # nethack
@@ -53,7 +61,7 @@ let
     discord
     # zoom-us
     spotify
-    vscode
+    # vscode
     google-chrome
   ];
 in
@@ -90,8 +98,7 @@ in
     # ../../pkgs/wayst.nix # terminal emulator
     ../../pkgs/kitty.nix
     # ../../pkgs/editors/vscodium # Text editor
-    ../../pkgs/pomatez.nix
-    ../../pkgs/mangohud.nix
+    ../../pkgs/editors/vscode # Text editor
     # ../../pkgs/editors/emacs # Another text editor
     # ../../pkgs/beekeeper-studio.nix # Database manager
     # ../../pkgs/lutris.nix
@@ -115,6 +122,9 @@ in
     };
     "org/gnome/desktop/wm/preferences" = {
       "button-layout" = ":minimize,maximize,close";
+    };
+    "org/gnome/desktop/sound" = {
+      "allow-volume-above-100-percent" = true;
     };
   };
 
@@ -141,5 +151,5 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 }

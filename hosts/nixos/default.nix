@@ -13,7 +13,7 @@
     ../../nixos-pkgs/virt-manager.nix
     ../../nixos-pkgs/steam.nix
     # ../../desktop/i3
-    # ../../desktop/awesome
+    ../../desktop/awesome
 
     # Grub
     ../../nixos-pkgs/grub/os-prober.nix
@@ -21,12 +21,9 @@
     # ../../nixos-pkgs/display-managers/lightdm.nix
   ];
 
-  environment.variables = {
-    GTK_IM_MODULE = "cedilla";
-    QT_IM_MODULE = "cedilla";
-  };
-
   hardware.opengl.setLdLibraryPath = true;
+
+  hardware.nvidia.open = true;
 
   services.devmon.enable = true;
   services.udisks2.enable = true;
@@ -40,19 +37,14 @@
     enable = true;
     desktopManager = {
       gnome.enable = true;
+      # cinnamon.enable = true;
     };
     windowManager.awesome.enable = true;
     libinput.enable = true;
 
     displayManager = {
-      # gdm.enable = true;
-      lightdm.enable = true;
-      # defaultSession = "cinnamon";
-      # setupCommands = ''
-      #   LEFT='DP-5'
-      #   RIGHT='HDMI-0'
-      #   ${pkgs.xorg.xrandr}/bin/xrandr --output $LEFT --left-of $RIGHT
-      # '';
+      gdm.enable = true;
+      # lightdm.enable = true;
     };
 
     videoDrivers = [ "nvidia" ];
@@ -81,10 +73,6 @@
     firewall = {
       enable = false;
     };
-    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
 
@@ -120,25 +108,6 @@
     supportedFilesystems = [ "ntfs" ];
   };
 
-  # # TODO: Move this to sway module
-  # programs.sway = {
-  #   enable = true;
-  #   wrapperFeatures.gtk = true;
-  # };
-
-  # Enable screen sharing in wayland
-  # xdg = {
-  #   portal = {
-  #     enable = true;
-  #     extraPortals = with pkgs; [
-  #       xdg-desktop-portal-wlr # Sway (wslroots)
-  #       xdg-desktop-portal-gtk # Gnome
-  #     ];
-  #     gtkUsePortal = true;
-  #   };
-  # };
-
-
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
 
@@ -157,7 +126,7 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-    # Enable sound with pipewire.
+  # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -191,5 +160,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 }

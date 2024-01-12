@@ -32,6 +32,7 @@ in
     ./lsp/rnix.nix
     ./lsp/ccls.nix
     ./lsp/crystalline.nix
+    ./lsp/angular.nix
 
     # ---- Linting ----
     # ./plugins/nvim-lint.nix
@@ -89,6 +90,7 @@ in
       nvim-dap
       vim-crystal
       copilot-vim
+      omnisharp-extended-lsp-nvim
     ];
 
     extraPackages = with pkgs; [

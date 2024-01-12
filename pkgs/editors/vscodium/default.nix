@@ -15,7 +15,7 @@ in
     # ./extensions/bash.nix
     # ./extensions/cpp.nix
     # ./extensions/rust.nix
-    ./extensions/elixir.nix
+    # ./extensions/elixir.nix
     # ./extensions/fsharp.nix
     # ./extensions/unity.nix
     # ./extensions/latex.nix
@@ -25,7 +25,7 @@ in
     # ./extensions/toml.nix
     # ./extensions/vspacecode
     # ./extensions/go.nix
-    # ./extensions/liveshare.nix
+    ./extensions/lacuna.nix
   ];
 
   programs.vscode = {
@@ -34,12 +34,12 @@ in
     userSettings = import ./settings.nix;
     # keybindings = import ./keybindings.nix;
     extensions = with pkgs.vscode-extensions; [
-      ionide.ionide-fsharp
-      ms-vsliveshare.vsliveshare
-      github.github-vscode-theme
-      pkief.material-icon-theme
-      usernamehw.errorlens
-      vscodevim.vim
+      # ionide.ionide-fsharp
+      # ms-vsliveshare.vsliveshare
+      # github.github-vscode-theme
+      # pkief.material-icon-theme
+      # usernamehw.errorlens
+      # vscodevim.vim
     ] ++ extensions;
   };
 }
