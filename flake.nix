@@ -64,7 +64,7 @@
       homeConfigurations =
         let
           system = "x86_64-linux";
-          username = "jonhp";
+          username = "joaop";
         in
         {
 			# nix build ".#homeConfigurations.debian.activationPackage" --impure

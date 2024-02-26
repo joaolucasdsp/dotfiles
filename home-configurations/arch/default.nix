@@ -14,17 +14,11 @@ let
     unzip # Easily unzip files
     pfetch # lightweight neofetch
 
-    # nb notes
-    nb
-
-    # lean version manager
-    elan
   ];
   gui = with pkgs; [
-    retroarch
     okular # ebook reader
-    sioyek # technical paper reader
     dbeaver
+    xfce.thunar
   ];
   games = with pkgs; [ ];
   proprietary = with pkgs; [ ];
@@ -53,39 +47,20 @@ in
     ../../pkgs/fzf.nix # Fuzzy finder
     ../../pkgs/bat.nix # File previewer
     ../../pkgs/eza.nix # ls alternative
-    ../../pkgs/newsboat.nix # RSS Reader
     ../../pkgs/trash-cli.nix # Safer rm
 
     ../../pkgs/direnv.nix # Manages project environments
     #../../pkgs/keychain.nix
     #../../pkgs/gpg.nix
-    ../../pkgs/jq.nix # Work with json
-    ../../pkgs/nnn.nix # File manager
-    ../../pkgs/tiny.nix # IRC Client
+    ../../pkgs/lazygit.nix
 
     # GUI
 
-    # Games
-    # ../../pkgs/games/dwarf-fortress
   ];
-
-  services.redshift = {
-    enable = true;
-    dawnTime = "6:00-7:45";
-    duskTime = "18:35-20:15";
-    temperature.day = 4500;
-    temperature.night = 2800;
-  };
 
   programs.bash = {
     shellAliases = {
       rb = "nix build --impure .#homeConfigurations.arch.activationPackage && result/activate";
-    };
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/wm/preferences" = {
-      "button-layout" = ":minimize,maximize,close";
     };
   };
 
