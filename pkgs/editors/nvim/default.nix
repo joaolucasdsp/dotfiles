@@ -16,7 +16,8 @@ in
     ./plugins/lspconfig.nix
     # ./plugins/lsp_lines.nix
 
-    ./lsp/omnisharp.nix
+    # ./lsp/omnisharp.nix
+    ./lsp/csharpls.nix
     ./lsp/go.nix
     ./lsp/erlang.nix
     ./lsp/fsharp.nix
@@ -91,6 +92,7 @@ in
       vim-crystal
       copilot-vim
       omnisharp-extended-lsp-nvim
+      csharpls-extended-lsp-nvim
     ];
 
     extraPackages = with pkgs; [
