@@ -19,6 +19,7 @@ let
     okular # ebook reader
     dbeaver
     xfce.thunar
+    lazydocker
   ];
   games = with pkgs; [ ];
   proprietary = with pkgs; [ ];
