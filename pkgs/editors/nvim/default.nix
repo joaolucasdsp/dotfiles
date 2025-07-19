@@ -34,6 +34,7 @@ in
     ./lsp/ccls.nix
     ./lsp/crystalline.nix
     ./lsp/angular.nix
+    ./lsp/ocaml.nix
 
     # ---- Linting ----
     # ./plugins/nvim-lint.nix
