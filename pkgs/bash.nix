@@ -1,18 +1,23 @@
 { pkgs, config, ... }:
 
 let
-  complete-alias = builtins.fetchGit {
-    url = "https://github.com/cykerway/complete-alias";
+  complete-alias = pkgs.fetchFromGitHub {
+    owner = "cykerway";
+    repo = "complete-alias";
     rev = "b16b183f6bf0029b9714b0e0178b6bd28eda52f3";
+    sha256 = "sha256-Yu4X7SDlu6sbIuO5rerjEcvfExYFBMymmBXIvYD7eqg=";
   };
-  tab-completion = builtins.fetchGit {
-    url = "https://github.com/lincheney/fzf-tab-completion";
+  tab-completion = pkgs.fetchFromGitHub {
+    owner = "lincheney";
+    repo = "fzf-tab-completion";
     rev = "53eb325f573265a6105c9bd0aa56cd865c4e14b7";
+    sha256 = "sha256-hvlz8/mdg9spKy2RLhqPukqdawd9+MEvW31smCsuUhA=";
   };
   ble-sh = pkgs.fetchFromGitHub {
-    author = "akinomyoga";
+    owner = "akinomyoga";
     repo = "ble.sh";
     rev = "e5d8d00cf52bb899af0ecab563be12dfc11451ba";
+    sha256 = "sha256-qbJ7cCfI0oXUuwUTFyRgqtUQArQEzJ+R4Q4Un5uY0JM=";
   };
 in
 {
