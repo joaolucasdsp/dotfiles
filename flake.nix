@@ -65,11 +65,12 @@
         let
           system = "x86_64-linux";
           username = "joaop";
+          homeDirectory = "/home/${username}";
         in
         {
 			# nix build ".#homeConfigurations.debian.activationPackage" --impure
           debian = lib.mkHome {
-            inherit system username;
+            inherit system username homeDirectory;
             name = "debian";
             overlays = [
               inputs.suckless.overlays
@@ -77,13 +78,19 @@
             colorscheme = inputs.nix-colors.colorSchemes.nord;
           };
           arch = lib.mkHome {
-            inherit system username;
+            inherit system username homeDirectory;
             name = "arch";
             colorscheme = inputs.nix-colors.colorSchemes.nord;
           };
           wsl = lib.mkHome {
-            inherit system username;
+            inherit system username homeDirectory;
             name = "wsl";
+          };
+          mac = lib.mkHome {
+            system = "aarch64-darwin";
+            homeDirectory = "/Users/${username}";
+            inherit username;
+            name = "mac";
           };
         };
       templates = import ./templates;

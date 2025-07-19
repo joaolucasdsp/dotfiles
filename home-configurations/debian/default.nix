@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, homeDirectory, ... }:
 
 let
   fonts = with pkgs; [
@@ -98,7 +98,7 @@ in
 
   # allow home-manager programs to be discovered by app launchers
   home.file.".xsessionrc".text = ''
-    . "/home/${username}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    . "${homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh"
   '';
 
   # Make home-manager work better on non-NixOS distros
@@ -110,7 +110,7 @@ in
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "${username}";
-  home.homeDirectory = "/home/${username}";
+  home.homeDirectory = homeDirectory;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

@@ -56,6 +56,7 @@ rec {
     { name
     , username
     , system ? "x86_64-linux"
+    , homeDirectory
     , stateVersion ? "21.11"
     , allowUnfree ? true
     , overlays ? [ ]
@@ -64,7 +65,6 @@ rec {
     }:
     let
       pkgs = mkNixpkgs { inherit allowUnfree system overlays; };
-      homeDirectory = "/home/${username}";
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       # inherit system username homeDirectory pkgs;
@@ -79,7 +79,7 @@ rec {
         (../home-configurations + "/${name}")
       ] ++ modules;
       extraSpecialArgs = {
-        inherit inputs system username prelude colorscheme;
+        inherit inputs system username homeDirectory prelude colorscheme;
       };
     };
 }
