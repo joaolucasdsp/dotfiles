@@ -28,7 +28,6 @@
             pkgs.mkShell {
               buildInputs = with pkgs; [
                 # Nix development dependencies
-                rnix-lsp
                 nixpkgs-fmt
               ];
             };
@@ -64,7 +63,7 @@
       homeConfigurations =
         let
           system = "x86_64-linux";
-          username = "joaop";
+          username = "codando";
           homeDirectory = "/home/${username}";
         in
         {

@@ -16,8 +16,7 @@ let
 
   ];
   gui = with pkgs; [
-    okular # ebook reader
-    dbeaver
+    dbeaver-bin
     xfce.thunar
     lazydocker
   ];
