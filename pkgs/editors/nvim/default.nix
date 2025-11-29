@@ -14,10 +14,11 @@ in
     # ---- Language server protocol ----
     ./plugins/lsp-signature.nix
     ./plugins/lspconfig.nix
+    ./plugins/conform.nix  # Formatting
     # ./plugins/lsp_lines.nix
 
-    # ./lsp/omnisharp.nix
-    ./lsp/csharpls.nix
+    ./lsp/omnisharp.nix
+    # ./lsp/csharpls.nix
     ./lsp/go.nix
     ./lsp/erlang.nix
     ./lsp/fsharp.nix
@@ -61,8 +62,8 @@ in
     # ./plugins/conjure.nix
 
     # Debugging
-    # ./plugins/dap.nix
-    # ./plugins/dap-ui.nix
+    ./plugins/dap.nix
+    ./plugins/dap-ui.nix
 
     # Git
     ./plugins/gitsigns.nix

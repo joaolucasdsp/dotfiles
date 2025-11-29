@@ -4,23 +4,25 @@ let
   lspconfig = {
     plugin = pkgs.vimPlugins.nvim-lspconfig;
     config = prelude.mkLuaCode ''
-      -- Disable virtual text diagnostics
-      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        {
-          virtual_text = false,
-          signs = true,
-          update_in_insert = true,
-          underline = true,
-        }
-      )
-
-      -- Diagnostic signs
-      local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-      for type, icon in pairs(signs) do
-        local hl = "LspDiagnosticsSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
+      -- Configure diagnostics (Neovim 0.11+ compatible)
+      vim.diagnostic.config({
+        virtual_text = false,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+          },
+        },
+        update_in_insert = true,
+        underline = true,
+        severity_sort = true,
+        float = {
+          border = "single",
+          source = "always",
+        },
+      })
 
       -- Add borders to lsp hover and signature popups
       vim.lsp.handlers["textDocument/hover"] =
@@ -43,21 +45,15 @@ let
       _G.on_attach = function(client, bufnr)
 
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
         vim.wo.signcolumn = 'yes'
 
         -- Mappings.
         local opts = { noremap=true, silent=true }
 
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-
-        -- buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
-        -- buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
-        -- buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
-
-        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
-        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
+        -- Updated diagnostic navigation for Neovim 0.11+
+        buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
         buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<cr>', opts)
 
         buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
@@ -69,7 +65,7 @@ let
 
         buf_set_keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
 
-        buf_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+        buf_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
         buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format { async = true }<cr>", opts)
         buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
         buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.workspace_symbol("")<cr>', opts)

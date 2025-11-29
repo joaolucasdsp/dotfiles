@@ -11,7 +11,31 @@ with pkgs;
       on_attach = on_attach,
       capabilities = capabilities,
       handlers = {
-        ["textDocument/definition"] = require('omnisharp_extended').handler,
+        -- Use extended handler with error handling
+        ["textDocument/definition"] = function(err, result, ctx, config)
+          local success, extended_err = pcall(function()
+            require('omnisharp_extended').handler(err, result, ctx, config)
+          end)
+          
+          -- If it fails, fall back to default handler
+          if not success then
+            vim.notify("Metadata navigation failed, using standard handler", vim.log.levels.WARN)
+            vim.lsp.handlers["textDocument/definition"](err, result, ctx, config)
+          end
+        end,
+      },
+      -- Enable formatting (Visual Studio style)
+      settings = {
+        FormattingOptions = {
+          -- Use Visual Studio formatting defaults
+          EnableEditorConfigSupport = true,
+          OrganizeImports = false,
+        },
+        RoslynExtensionsOptions = {
+          EnableAnalyzersSupport = true,
+          EnableImportCompletion = true,
+          AnalyzeOpenDocumentsOnly = false,
+        },
       },
     }
   '';
