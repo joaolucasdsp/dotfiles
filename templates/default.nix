@@ -28,4 +28,10 @@
     description = "A simple C flake";
     path = ./c;
   };
+
+  # nix flake init -t github:joaolucasete/dotfiles#templates.rust
+  rust = {
+    description = "A simple Rust flake";
+    path = ./rust;
+  };
 }
