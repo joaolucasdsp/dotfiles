@@ -5,36 +5,31 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, devenv, utils, ... } @ inputs:
-
+  outputs = { nixpkgs, devenv, utils, ... } @ inputs:
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShells =
-          {
-            default = devenv.lib.mkShell {
-              inherit inputs pkgs;
-              modules = [
-                {
-                  languages.python = {
-                    enable = true;
-                    venv = {
-                      enable = true;
-                    };
-                  };
-                  # https://devenv.sh/reference/options/
-                  packages = with pkgs; [
-                    python310Packages.jedi-language-server # python lsp neovim
-                    nil
-                  ];
+        devShells.default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              languages.python = {
+                enable = true;
+                venv.enable = true;
+              };
 
-                  enterShell = ''
-                  '';
-                }
+              # https://devenv.sh/reference/options/
+              packages = with pkgs; [
+                python310Packages.jedi-language-server # python lsp neovim
+                nil
               ];
-            };
-          };
+
+              enterShell = ''
+              '';
+            }
+          ];
+        };
       });
 }

@@ -1,18 +1,23 @@
 {
   description = "Lean4 flake nix";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     lean4.url = "github:leanprover/lean4";
+    utils.url = "github:numtide/flake-utils";
   };
-  outputs = { self, nixpkgs, lean4 }:
-    let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-      };
-    in {
-      devShells."x86_64-linux".default = pkgs.mkShell {
-        name = "lean4-devshell";
-        buildInputs = [ lean4.defaultPackage."x86_64-linux"];
-      };
-    };
+
+  outputs = { nixpkgs, lean4, utils, ... }:
+    utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          name = "lean4-devshell";
+          packages = [
+            lean4.packages.${system}.default
+          ];
+        };
+      });
 }

@@ -9,7 +9,7 @@ in
     , username
     , homeDirectory
     , system ? "x86_64-linux"
-    , stateVersion ? "21.11"
+    , stateVersion
     , allowUnfree ? true
     , modules ? [ ]
     }:
