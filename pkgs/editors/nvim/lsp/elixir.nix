@@ -2,10 +2,11 @@
 
 {
   programs.neovim.extraConfig = prelude.mkLuaCode ''
-    require('lspconfig').elixirls.setup{
+    vim.lsp.config('elixirls', {
       on_attach = on_attach,
       capabilities = capabilities,
       cmd = { "elixir-ls" }
-    }
+    })
+    vim.lsp.enable('elixirls')
   '';
 }

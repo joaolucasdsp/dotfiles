@@ -3,7 +3,7 @@
 with pkgs;
 {
   programs.neovim.extraConfig = prelude.mkLuaCode ''
-    require('lspconfig').rust_analyzer.setup{
+    vim.lsp.config('rust_analyzer', {
       on_attach = on_attach,
       capabilities = capabilities,
       settings = {
@@ -14,6 +14,7 @@ with pkgs;
           diagnostics = { disabled = { "unresolved-proc-macro" } }
         }
       }
-    }
+    })
+    vim.lsp.enable('rust_analyzer')
   '';
 }

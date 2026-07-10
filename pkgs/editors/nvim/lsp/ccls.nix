@@ -2,9 +2,10 @@
 
 {
   programs.neovim.extraConfig = prelude.mkLuaCode ''
-    require('lspconfig').ccls.setup {
+    vim.lsp.config('ccls', {
       on_attach = on_attach,
-      capabitilies = capabitilies
-    }
+      capabilities = capabilities
+    })
+    vim.lsp.enable('ccls')
   '';
 }

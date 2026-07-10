@@ -6,7 +6,7 @@ with pkgs;
     local pid = vim.fn.getpid()
     local omnisharp_bin = "${omnisharp-roslyn}/bin/OmniSharp"
 
-    require('lspconfig').omnisharp.setup{
+    vim.lsp.config('omnisharp', {
       cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
       on_attach = on_attach,
       capabilities = capabilities,
@@ -37,6 +37,7 @@ with pkgs;
           AnalyzeOpenDocumentsOnly = false,
         },
       },
-    }
+    })
+    vim.lsp.enable('omnisharp')
   '';
 }

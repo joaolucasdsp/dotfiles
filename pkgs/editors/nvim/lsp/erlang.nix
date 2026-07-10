@@ -2,9 +2,10 @@
 
 {
   programs.neovim.extraConfig = prelude.mkLuaCode ''
-    require('lspconfig').erlangls.setup{
+    vim.lsp.config('erlangls', {
       on_attach = on_attach,
       capabilities = capabilities,
-    }
+    })
+    vim.lsp.enable('erlangls')
   '';
 }

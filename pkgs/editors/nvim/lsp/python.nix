@@ -2,18 +2,13 @@
 
 {
   programs.neovim.extraConfig = prelude.mkLuaCode ''
-    -- require('lspconfig').pylsp.setup{
-      -- cmd = {'pyls'},
-      -- on_attach = on_attach,
-      -- capabilities = capabilities
-    -- }
-
-    require('lspconfig').jedi_language_server.setup{
+    vim.lsp.config('jedi_language_server', {
       on_attach = on_attach,
       capabilities = capabilities,
       flags = {
         debounce_text_changes = 150
       }
-    }
+    })
+    vim.lsp.enable('jedi_language_server')
   '';
 }
