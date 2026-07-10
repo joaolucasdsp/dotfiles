@@ -3,6 +3,7 @@
 let
   lsp-signature = {
     plugin = pkgs.vimPlugins.lsp_signature-nvim;
+    type = "viml";
     config = prelude.mkLuaCode "require('lsp_signature').setup()";
   };
 in

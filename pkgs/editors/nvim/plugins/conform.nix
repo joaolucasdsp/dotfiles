@@ -3,6 +3,7 @@
 let
   conform = {
     plugin = pkgs.vimPlugins.conform-nvim;
+    type = "viml";
     config = prelude.mkLuaCode ''
       require("conform").setup({
         formatters_by_ft = {

@@ -15,6 +15,7 @@ let
 
       meta.homepage = "https://github.com/navarasu/onedark.nvim";
     };
+    type = "viml";
     config = ''
       let g:onedark_disable_toggle_style = 1
       colorscheme onedark

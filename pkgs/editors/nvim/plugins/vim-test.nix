@@ -3,6 +3,7 @@
 let
   vim-test = {
     plugin = pkgs.vimPlugins.vim-test;
+    type = "viml";
     config = ''
       nnoremap <leader>ts :TestSuite<cr>
       nnoremap <leader>tn :TestNearest<cr>

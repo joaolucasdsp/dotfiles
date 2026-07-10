@@ -3,6 +3,7 @@
 let
   fzf-vim = {
     plugin = pkgs.vimPlugins.fzf-vim;
+    type = "viml";
     config = ''
       let $FZF_DEFAULT_COMMAND = 'fd -H'
       let $FZF_DEFAULT_OPTS = '--exact --reverse --bind ctrl-a:select-all'

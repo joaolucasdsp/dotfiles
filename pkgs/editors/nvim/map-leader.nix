@@ -3,6 +3,7 @@
 let
   leader-mappings = {
     plugin = pkgs.writeText "dummy" "";
+    type = "viml";
     config = ''
       let mapleader = " "
       let maplocalleader = ","

@@ -10,7 +10,10 @@
   # any existing file to ~/.ssh/config.hm-backup.
   programs.ssh = {
     enable = true;
-    matchBlocks."github.com".user = "git";
+    # Opt out of the deprecated implicit `Host *` defaults (they matched
+    # OpenSSH's own built-in defaults anyway).
+    enableDefaultConfig = false;
+    settings."github.com".User = "git";
   };
 
   # --- Bitwarden SSH agent bridge (Windows -> WSL) ---

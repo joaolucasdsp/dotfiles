@@ -3,6 +3,7 @@
 let
   dap-ui = {
     plugin = pkgs.vimPlugins.nvim-dap-ui;
+    type = "viml";
     config = ''
         nnoremap <leader>du <cmd>lua require('dapui').toggle()<cr>
 

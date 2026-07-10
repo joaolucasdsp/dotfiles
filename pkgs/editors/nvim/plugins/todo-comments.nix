@@ -3,6 +3,7 @@
 let
   todo-comments = {
     plugin = pkgs.vimPlugins.todo-comments-nvim;
+    type = "viml";
     config = ''
       nnoremap <leader>pt <cmd>TodoQuickFix<cr>
       lua require('todo-comments').setup{}

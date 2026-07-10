@@ -49,6 +49,9 @@ in
   programs.neovim = {
     enable = true;
     vimAlias = true;
+    # Preserve pre-26.05 behavior (providers enabled) now that the defaults flipped.
+    withRuby = true;
+    withPython3 = true;
     plugins = with pkgs.vimPlugins; [
       editorconfig-vim
       vim-polyglot

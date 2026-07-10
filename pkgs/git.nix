@@ -28,8 +28,6 @@ in
   programs.git = {
     enable = true;
 
-    userName = "codando";
-    userEmail = "joaolwork@gmail.com";
     package = pkgs.gitFull;
 
     # Commit signing with SSH (key served by the Bitwarden agent).
@@ -39,7 +37,9 @@ in
       signByDefault = true;
     };
 
-    extraConfig = {
+    settings = {
+      user.name = "codando";
+      user.email = "joaolwork@gmail.com";
       core.editor = "vim";
       pull.rebase = true;
       merge.conflictstyle = "diff3";
@@ -50,29 +50,30 @@ in
 
     # Global ignores
     ignores = [
-      "*~" 
+      "*~"
       "*.swp"
       # ".envrc"
       ".direnv"
     ];
+  };
 
-    delta = {
-      enable = true;
-      options = {
-        features = "line-numbers decorations";
-        syntax-theme = "gruvbox-dark";
-        plus-style = ''syntax "#003800"'';
-        minus-style = ''syntax "#3f0001"'';
-        side-by-side = true;
-        decorations = {
-          commit-decoration-style = "bold yellow box ul";
-          file-style = "bold yellow ul";
-          file-decoration-style = "none";
-          hunk-header-decoration-style = "cyan box ul";
-        };
-        delta = {
-          navigate = true;
-        };
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      features = "line-numbers decorations";
+      syntax-theme = "gruvbox-dark";
+      plus-style = ''syntax "#003800"'';
+      minus-style = ''syntax "#3f0001"'';
+      side-by-side = true;
+      decorations = {
+        commit-decoration-style = "bold yellow box ul";
+        file-style = "bold yellow ul";
+        file-decoration-style = "none";
+        hunk-header-decoration-style = "cyan box ul";
+      };
+      delta = {
+        navigate = true;
       };
     };
   };

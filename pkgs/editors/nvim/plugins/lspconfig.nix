@@ -3,6 +3,7 @@
 let
   lspconfig = {
     plugin = pkgs.vimPlugins.nvim-lspconfig;
+    type = "viml";
     config = prelude.mkLuaCode ''
       -- Configure diagnostics (Neovim 0.11+ compatible)
       vim.diagnostic.config({

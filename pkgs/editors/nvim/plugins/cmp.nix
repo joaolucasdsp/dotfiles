@@ -5,6 +5,7 @@ let
   cmp = {
     plugin = pkgs.vimPlugins.nvim-cmp;
 
+    type = "viml";
     config = prelude.mkLuaCode ''
       local cmp = require('cmp')
       local compare = require('cmp.config.compare')

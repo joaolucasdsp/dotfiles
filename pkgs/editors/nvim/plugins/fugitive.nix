@@ -3,6 +3,7 @@
 let
   fugitive = {
     plugin = pkgs.vimPlugins.vim-fugitive;
+    type = "viml";
     config = ''
       nnoremap <silent> <Leader>gg :tab G<cr>
       nnoremap <silent> <Leader>gd :Gvdiffsplit<cr>

@@ -3,6 +3,7 @@
 let
   dap = {
     plugin = pkgs.vimPlugins.nvim-dap;
+    type = "viml";
     config = ''
         nnoremap <leader>dd <cmd>lua require('dap').toggle_breakpoint()<cr>
         nnoremap <leader>dD <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>

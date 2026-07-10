@@ -3,6 +3,7 @@
 let
   gitsigns = {
     plugin = pkgs.vimPlugins.gitsigns-nvim;
+    type = "viml";
     config = ''
         nnoremap <leader>gm <cmd>lua require('gitsigns').blame_line(true)<cr>
 

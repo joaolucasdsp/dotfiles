@@ -3,6 +3,7 @@
 let
   nvim-tree = {
     plugin = pkgs.vimPlugins.nvim-tree-lua;
+    type = "viml";
     config = ''
       ${prelude.mkLuaCode ''
         require('nvim-tree').setup {
