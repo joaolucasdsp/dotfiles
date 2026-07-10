@@ -3,7 +3,11 @@
 let
   shellConfig = {
     initExtra = ''
-      . ~/.nix-profile/etc/profile.d/nix.sh
+      if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      elif [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+        . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+      fi
     '';
     shellAliases = {
       rb = "nix build .#homeConfigurations.wsl.activationPackage && result/activate";
