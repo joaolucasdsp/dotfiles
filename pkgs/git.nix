@@ -28,18 +28,24 @@ in
   programs.git = {
     enable = true;
 
-    userName = "Joao Lucas";
-    userEmail = "joao_pereira@gec.inatel.br";
+    userName = "codando";
+    userEmail = "joaolwork@gmail.com";
     package = pkgs.gitFull;
 
-    signing.key = "0xA6CD679D10138E4B";
-    signing.signByDefault = false;
+    # Commit signing with SSH (key served by the Bitwarden agent).
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
 
     extraConfig = {
       core.editor = "vim";
       pull.rebase = true;
       merge.conflictstyle = "diff3";
       init.defaultBranch = "main";
+      # Verify signatures locally against ~/.ssh/allowed_signers
+      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
     };
 
     # Global ignores

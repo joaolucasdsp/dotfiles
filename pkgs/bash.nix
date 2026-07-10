@@ -50,9 +50,6 @@ in
 
       export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\e[91m\]\$(parse_git_branch)\[\033[00m\]\$ "
 
-      # --- GPG ---
-      export GPG_TTY=$(tty)
-
       # --- Vi mode ---
       set -o vi
       bind -m vi-insert 'Control-l: clear-screen'

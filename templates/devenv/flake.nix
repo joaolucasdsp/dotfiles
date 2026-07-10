@@ -26,7 +26,7 @@
                   packages = with pkgs; [
                     # put your packages here
                     
-                    rnix-lsp
+                    nil
                   ];
 
                   enterShell = ''

@@ -20,7 +20,7 @@
             cmake
             ninja
 
-            rnix-lsp
+            nil
           ];
         };
       });

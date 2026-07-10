@@ -1,6 +1,5 @@
 { config, pkgs, prelude, ... }:
 
-with pkgs.vimPlugins;
 let
   aliases = {
     v = "nvim";
@@ -9,72 +8,42 @@ let
 in
 {
   imports = [
-    ./map-leader.nix # TODO: windows
+    ./map-leader.nix
 
     # ---- Language server protocol ----
     ./plugins/lsp-signature.nix
     ./plugins/lspconfig.nix
-    ./plugins/conform.nix  # Formatting
-    # ./plugins/lsp_lines.nix
+    ./plugins/conform.nix # Formatting
 
-    ./lsp/omnisharp.nix
-    # ./lsp/csharpls.nix
-    ./lsp/go.nix
-    ./lsp/erlang.nix
-    ./lsp/fsharp.nix
-    ./lsp/rust.nix
-    # ./lsp/clojure.nix
-    ./lsp/elixir.nix
-    # ./lsp/godot.nix
-    ./lsp/haskell.nix
-    # ./lsp/latex.nix
-    # ./lsp/lua.nix
-    ./lsp/node.nix
+    ./lsp/node.nix # TypeScript / JavaScript
     ./lsp/python.nix
-    ./lsp/rnix.nix
-    ./lsp/ccls.nix
-    ./lsp/crystalline.nix
-    ./lsp/angular.nix
-    ./lsp/ocaml.nix
+    ./lsp/rust.nix
+    ./lsp/go.nix
+    ./lsp/omnisharp.nix # C# / .NET
+    ./lsp/ccls.nix # C / C++
+    ./lsp/elixir.nix
+    ./lsp/erlang.nix
+    ./lsp/nix.nix
 
-    # ---- Linting ----
-    # ./plugins/nvim-lint.nix
-
-    # ---- General plugins ----
-    # ./plugins/typewriter.nix
-
-    # Utils
-    # ./plugins/tree-sitter.nix
+    # ---- Utils ----
     ./plugins/nvim-tree.nix
     ./plugins/cmp.nix
     ./plugins/pears.nix
-
     ./plugins/fzf.nix
-
-    # ./plugins/togglelist.nix
-    # ./plugins/closetag.nix
-    # ./plugins/neomake.nix
     ./plugins/slash.nix
     ./plugins/vim-test.nix
-    # ./plugins/vim-slime.nix
 
-    # Repl
-    # ./plugins/conjure.nix
-
-    # Debugging
+    # ---- Debugging ----
     ./plugins/dap.nix
     ./plugins/dap-ui.nix
 
-    # Git
+    # ---- Git ----
     ./plugins/gitsigns.nix
     ./plugins/fugitive.nix
 
-    # Aesthetic
+    # ---- Aesthetic ----
     ./colorschemes/onedark.nix
     ./plugins/todo-comments.nix
-
-    # nvim tabs
-    # ./plugins/barbar.nix
   ];
 
   programs.neovim = {
@@ -91,7 +60,6 @@ in
       vim-tmux-navigator
       nvim-web-devicons
       nvim-dap
-      vim-crystal
       copilot-vim
       omnisharp-extended-lsp-nvim
       csharpls-extended-lsp-nvim
