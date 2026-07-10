@@ -1,6 +1,10 @@
 { pkgs, prelude, ... }:
 
 let
+
+  signingKeyFile = ".ssh/SSH-pessoal-ed25519-2026.pub";
+  signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHSr/EXnMuAWXZ3GxWgIVQsV/VvTC34CbgiGSd4r7J2h SSH-pessoal-ed25519-2026";
+
   aliases = {
     gw = "git worktree";
     gs = "git status";
@@ -33,7 +37,7 @@ in
     # Commit signing with SSH (key served by the Bitwarden agent).
     signing = {
       format = "ssh";
-      key = "~/.ssh/id_ed25519.pub";
+      key = "~/${signingKeyFile}";
       signByDefault = true;
     };
 
@@ -55,6 +59,16 @@ in
       # ".envrc"
       ".direnv"
     ];
+  };
+
+  home.file = {
+    "${signingKeyFile}".text = ''
+      ${signingKey}
+    '';
+
+    ".ssh/allowed_signers".text = ''
+      joaolwork@gmail.com ${signingKey}
+    '';
   };
 
   programs.delta = {
