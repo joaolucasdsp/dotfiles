@@ -12,26 +12,35 @@
   outputs = { self, nixpkgs, ... } @inputs:
     let
       lib = import ./lib inputs;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      linuxSystem = "x86_64-linux";
+      darwinSystem = "aarch64-darwin";
+      pkgs = nixpkgs.legacyPackages.${linuxSystem};
     in
     {
       homeConfigurations.wsl = lib.mkHome {
-        inherit system;
+        system = linuxSystem;
         name = "wsl";
         username = "codando";
         homeDirectory = "/home/codando";
         stateVersion = "21.11";
       };
 
+      homeConfigurations.macos = lib.mkHome {
+        system = darwinSystem;
+        name = "macos";
+        username = "codando";
+        homeDirectory = "/Users/codando";
+        stateVersion = "21.11";
+      };
+
       templates = import ./templates;
 
-      formatter.${system} = pkgs.nixpkgs-fmt;
+      formatter.${linuxSystem} = pkgs.nixpkgs-fmt;
 
-      checks.${system}.homeConfigurations-wsl =
+      checks.${linuxSystem}.homeConfigurations-wsl =
         self.homeConfigurations.wsl.activationPackage;
 
-      devShells.${system}.default = pkgs.mkShell {
+      devShells.${linuxSystem}.default = pkgs.mkShell {
         packages = with pkgs; [
           nil
           nixpkgs-fmt

@@ -13,6 +13,17 @@ nix build .#homeConfigurations.wsl.activationPackage
 ./result/activate
 ```
 
+From macOS:
+
+```sh
+git clone git@github.com:joaolucasdp/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+home-manager switch --flake .#macos
+```
+
+The macOS profile assumes Apple Silicon (`aarch64-darwin`). For Intel Macs,
+change the `macos` system in `flake.nix` to `x86_64-darwin`.
+
 If `direnv` blocks the repository environment, approve it after reviewing `.envrc`:
 
 ```sh
@@ -66,5 +77,7 @@ cargo run
 ## Notes
 
 - Git commit signing uses SSH signing backed by the configured Bitwarden SSH agent flow.
+- macOS uses the Bitwarden SSH Agent socket at `~/.bitwarden-ssh-agent.sock`.
 - The WSL profile is defined in `home-configurations/wsl`.
+- The macOS profile is defined in `home-configurations/macos`.
 - Reusable Home Manager modules live in `pkgs`.
