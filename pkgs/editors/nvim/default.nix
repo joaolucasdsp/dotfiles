@@ -18,6 +18,7 @@ in
     ./lsp/node.nix # TypeScript / JavaScript
     ./lsp/python.nix
     ./lsp/rust.nix
+    ./lsp/ocaml.nix
     ./lsp/go.nix
     ./lsp/omnisharp.nix # C# / .NET
     ./lsp/ccls.nix # C / C++

@@ -23,6 +23,9 @@ let
           
           -- JSON
           json = { "prettier" },
+
+          -- OCaml formatting
+          ocaml = { "ocamlformat" },
         },
         
         -- Format on save

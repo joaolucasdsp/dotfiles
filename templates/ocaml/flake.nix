@@ -10,6 +10,9 @@
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
+        ocaml-run = pkgs.writeShellScriptBin "ocaml-run" ''
+          exec dune exec ./bin/main.exe -- "$@"
+        '';
       in
       {
         devShells.default = pkgs.mkShell {
@@ -22,6 +25,7 @@
             utop
           ]) ++ [
             pkgs.nil
+            ocaml-run
           ];
         };
       });
