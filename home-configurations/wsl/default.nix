@@ -9,9 +9,6 @@ let
         . "$HOME/.nix-profile/etc/profile.d/nix.sh"
       fi
     '';
-    shellAliases = {
-      rb = "nix build .#homeConfigurations.wsl.activationPackage && result/activate";
-    };
   };
 in
 {

@@ -1,5 +1,5 @@
 {
-  description = "My nix dotfiles (WSL)";
+  description = "My Nix dotfiles";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -11,40 +11,73 @@
 
   outputs = { self, nixpkgs, ... } @inputs:
     let
-      lib = import ./lib inputs;
-      linuxSystem = "x86_64-linux";
-      darwinSystem = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${linuxSystem};
-    in
-    {
-      homeConfigurations.wsl = lib.mkHome {
-        system = linuxSystem;
-        name = "wsl";
-        username = "codando";
-        homeDirectory = "/home/codando";
-        stateVersion = "21.11";
+      homeLib = import ./lib inputs;
+      lib = nixpkgs.lib;
+
+      # Add future Home Manager environments here. The outputs below are
+      # generated automatically for every declared configuration and system.
+      configurations = {
+        wsl = {
+          system = "x86_64-linux";
+          name = "wsl";
+          username = "codando";
+          homeDirectory = "/home/codando";
+          stateVersion = "21.11";
+        };
+
+        macos = {
+          system = "aarch64-darwin";
+          name = "macos";
+          username = "joaop";
+          homeDirectory = "/Users/joaop";
+          stateVersion = "21.11";
+        };
       };
 
-      homeConfigurations.macos = lib.mkHome {
-        system = darwinSystem;
-        name = "macos";
-        username = "codando";
-        homeDirectory = "/Users/codando";
-        stateVersion = "21.11";
-      };
+      systems = lib.unique (map (config: config.system) (
+        builtins.attrValues configurations
+      ));
+
+      forEachSystem = lib.genAttrs systems;
+    in
+    {
+      homeConfigurations = builtins.mapAttrs (
+        configurationName: config:
+        homeLib.mkHome (config // { inherit configurationName; })
+      ) configurations;
 
       templates = import ./templates;
 
-      formatter.${linuxSystem} = pkgs.nixpkgs-fmt;
+      formatter = forEachSystem (
+        system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt
+      );
 
-      checks.${linuxSystem}.homeConfigurations-wsl =
-        self.homeConfigurations.wsl.activationPackage;
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nil
+              nixpkgs-fmt
+            ];
+          };
+        }
+      );
 
-      devShells.${linuxSystem}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nil
-          nixpkgs-fmt
-        ];
-      };
+      checks = builtins.foldl' (
+        checks: configurationName:
+        let
+          system = configurations.${configurationName}.system;
+        in
+        checks // {
+          ${system} = (checks.${system} or { }) // {
+            "home-${configurationName}" =
+              self.homeConfigurations.${configurationName}.activationPackage;
+          };
+        }
+      ) { } (builtins.attrNames configurations);
     };
 }

@@ -6,6 +6,7 @@ in
 {
   mkHome =
     { name
+    , configurationName
     , username
     , homeDirectory
     , system ? "x86_64-linux"
@@ -30,7 +31,7 @@ in
       ] ++ modules;
 
       extraSpecialArgs = {
-        inherit inputs system username homeDirectory prelude;
+        inherit inputs system configurationName username homeDirectory prelude;
       };
     };
 }

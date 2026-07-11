@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, configurationName, ... }:
 
 {
   imports = [
@@ -27,6 +27,9 @@
     tealdeer
     nb
   ];
+
+  programs.bash.shellAliases.rb =
+    "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
 
   programs.home-manager.enable = true;
 }
