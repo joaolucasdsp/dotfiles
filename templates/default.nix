@@ -34,4 +34,10 @@
     description = "A simple Rust flake";
     path = ./rust;
   };
+
+  # nix flake init -t github:joaolucasete/dotfiles#templates.ocaml
+  ocaml = {
+    description = "A simple OCaml project using Dune";
+    path = ./ocaml;
+  };
 }
