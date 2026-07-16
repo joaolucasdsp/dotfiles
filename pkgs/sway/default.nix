@@ -3,7 +3,15 @@
 {
   home.packages = with pkgs; [
     brightnessctl
-    swaylock
+    # NOTE: swaylock is deliberately NOT installed from nixpkgs here. Fedora's
+    # swayidle (config.d/90-swayidle.conf) locks by running `swaylock -f` off
+    # $PATH, and a nix-installed swaylock would shadow /usr/bin/swaylock. The
+    # nixpkgs swaylock authenticates via nixpkgs' own pam_unix.so, which execs
+    # /run/wrappers/bin/unix_chkpwd — a NixOS-only setuid path that doesn't
+    # exist on Fedora. Result: every unlock reports "invalid password" even
+    # with the correct one. We rely on Fedora's system swaylock (dnf), wired to
+    # the distro PAM stack and the setuid /usr/sbin/unix_chkpwd. Same rationale
+    # as using the system sway package (see below).
   ];
 
   # Fedora Sway Spin ships /usr/share/sway/config.d/90-bar.conf, which starts
