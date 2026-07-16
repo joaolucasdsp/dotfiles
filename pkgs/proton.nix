@@ -3,12 +3,12 @@
 {
   # Proton desktop suite. Linux-only: none of these packages build on Darwin.
   #
-  # `proton-vpn` talks to the *system* NetworkManager over D-Bus to bring
-  # up WireGuard/OpenVPN connections, so it needs `NetworkManager` running on
-  # the host (Fedora Workstation ships it enabled by default). The Nix build
-  # covers the client itself, not the kernel/NM side.
+  # NOTE: proton-vpn is intentionally NOT installed from nixpkgs. The VPN client
+  # is installed from Fedora's official package (dnf) so it integrates cleanly
+  # with the system NetworkManager/WireGuard stack; the Nix build fought with
+  # the host NM side. The apps below are self-contained GUIs with no such
+  # system coupling, so they stay on Nix.
   home.packages = with pkgs; [
-    proton-vpn
     proton-pass
     protonmail-desktop
     proton-authenticator
