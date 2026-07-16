@@ -25,6 +25,14 @@
           stateVersion = "21.11";
         };
 
+        fedora = {
+          system = "x86_64-linux";
+          name = "fedora";
+          username = "codando";
+          homeDirectory = "/home/codando";
+          stateVersion = "25.05";
+        };
+
         macos = {
           system = "aarch64-darwin";
           name = "macos";
