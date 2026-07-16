@@ -1,0 +1,160 @@
+/* Catppuccin Mocha — kept in sync with kitty (pkgs/kitty) and the sway
+   window borders / output bg (pkgs/sway/config), so the whole rice reads as
+   one theme. */
+@define-color base     #1e1e2e;
+@define-color mantle   #181825;
+@define-color crust    #11111b;
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color text     #cdd6f4;
+@define-color subtext  #a6adc8;
+@define-color overlay  #6c7086;
+@define-color pink     #f5c2e7;
+@define-color mauve    #cba6f7;
+@define-color red      #f38ba8;
+@define-color peach    #fab387;
+@define-color yellow   #f9e2af;
+@define-color green    #a6e3a1;
+@define-color teal     #94e2d5;
+@define-color blue     #89b4fa;
+@define-color lavender #b4befe;
+
+* {
+  font-family: Material Design Icons, JetBrainsMono Nerd Font;
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: transparent;
+  color: @text;
+}
+
+window#waybar.hidden {
+  opacity: 0.1;
+}
+
+/* Shared pill look for every module cluster. */
+#workspaces,
+#clock,
+#backlight,
+#battery,
+#cpu,
+#memory,
+#pulseaudio,
+#custom-launcher,
+#custom-powermenu,
+#tray,
+#network,
+#mpris {
+  background-color: @crust;
+  padding: 2px 12px;
+  margin-top: 2px;
+  margin-bottom: 0px;
+  margin-right: 8px;
+  border-radius: 8px;
+}
+
+/* ---- Left cluster: launcher + workspaces joined into one pill ---- */
+#custom-launcher {
+  color: @mauve;
+  font-size: 15px;
+  padding-left: 12px;
+  padding-right: 10px;
+  margin-left: 8px;
+  margin-right: 0px;
+  border-radius: 8px 0px 0px 8px;
+}
+
+#workspaces {
+  padding: 2px 6px;
+  border-radius: 0px 8px 8px 0px;
+}
+
+#workspaces button {
+  color: @overlay;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0px 6px;
+  margin: 2px 2px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+#workspaces button:hover {
+  color: @text;
+  background: @surface0;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  color: @crust;
+  background: @mauve;
+}
+
+#workspaces button.urgent {
+  color: @crust;
+  background: @red;
+}
+
+/* ---- Center ---- */
+#clock {
+  color: @lavender;
+  font-family: JetBrainsMono Nerd Font;
+  font-weight: bolder;
+}
+
+/* ---- Right cluster ---- */
+#cpu       { color: @mauve; }
+#memory    { color: @green; }
+#backlight { color: @yellow; }
+#pulseaudio { color: @pink; }
+#pulseaudio.muted { color: @overlay; }
+#network   { color: @blue; }
+#network.disconnected { color: @red; }
+#mpris     { color: @teal; }
+
+#battery { color: @teal; }
+#battery.charging { color: @green; }
+#battery.warning:not(.charging) { color: @yellow; }
+#battery.critical:not(.charging) {
+  color: @red;
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  to { color: @surface1; }
+}
+
+#tray {
+  padding: 2px 10px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @red;
+  border-radius: 8px;
+}
+
+#custom-powermenu {
+  color: @red;
+  margin-right: 8px;
+}
+
+tooltip {
+  border-radius: 8px;
+  padding: 12px;
+  background-color: @mantle;
+  border: 1px solid @surface0;
+}
+
+tooltip label {
+  color: @text;
+  background-color: @mantle;
+}

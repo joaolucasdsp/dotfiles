@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Referenced by eww.yuck as `~/.config/eww/getSongDuration` but not present
+# in the original new-wave rice repo - written to match what it's clearly
+# meant to do: show "elapsed / total" for the eww music widget.
+
+set -euo pipefail
+
+if ! command -v mpc >/dev/null 2>&1; then
+    echo "0:00 / 0:00"
+    exit 0
+fi
+
+current=$(mpc status %currenttime% 2>/dev/null || echo "0:00")
+total=$(mpc status %totaltime% 2>/dev/null || echo "0:00")
+
+if [ -z "$current" ] || [ -z "$total" ]; then
+    echo "0:00 / 0:00"
+else
+    echo "$current / $total"
+fi

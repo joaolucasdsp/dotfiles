@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Not present in the original new-wave rice repo (referenced from sway
+# config as ~/.config/battery-alert/battery-alert but never committed) -
+# written from scratch to match what it's clearly meant to do: notify at
+# low battery. No-ops if there's no laptop battery (BAT*) on this machine.
+
+set -euo pipefail
+
+shopt -s nullglob
+batteries=(/sys/class/power_supply/BAT*)
+if [ ${#batteries[@]} -eq 0 ]; then
+    exit 0
+fi
+
+battery="${batteries[0]}"
+notified_low=0
+notified_critical=0
+
+while true; do
+    capacity=$(cat "$battery/capacity" 2>/dev/null || echo 100)
+    status=$(cat "$battery/status" 2>/dev/null || echo Unknown)
+
+    if [ "$status" = "Discharging" ]; then
+        if [ "$capacity" -le 10 ] && [ "$notified_critical" -eq 0 ]; then
+            notify-send -u critical "Battery critical" "${capacity}% remaining"
+            notified_critical=1
+        elif [ "$capacity" -le 20 ] && [ "$notified_low" -eq 0 ]; then
+            notify-send -u normal "Battery low" "${capacity}% remaining"
+            notified_low=1
+        elif [ "$capacity" -gt 20 ]; then
+            notified_low=0
+            notified_critical=0
+        fi
+    else
+        notified_low=0
+        notified_critical=0
+    fi
+
+    sleep 60
+done

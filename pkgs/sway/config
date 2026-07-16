@@ -1,0 +1,182 @@
+# Adapted from https://github.com/LoneWolf4713/new-wave
+#
+# Managed by home-manager (pkgs/sway/default.nix). Uses the system's sway
+# package (Fedora Sway Spin) rather than nixpkgs' — see the comment in
+# default.nix on why.
+
+### Variables
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term kitty
+set $menu "bash ~/.config/rofi/launchers/type-7/launcher.sh"
+
+### Output
+# No wallpaper image shipped with the adapted config (the original rice
+# pointed at the author's own ~/Wallpapers/palms-purple-sky.png, which we
+# don't have). Falls back to a solid color; override with:
+#   output * bg ~/Pictures/your-wallpaper.png fill
+output * bg #1e1e2e solid_color
+
+### Input
+input "type:touchpad" {
+    dwt enabled
+    tap enabled
+    middle_emulation enabled
+    scroll_method edge
+    natural_scroll enabled
+}
+
+### Key bindings
+bindsym $mod+Return exec $term
+bindsym $mod+q kill
+bindsym $mod+d exec $menu
+floating_modifier $mod normal
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Moving around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Layout
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Resizing
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+# MY STUFF ---------------------------------------------------------------
+
+# Rofi menus
+bindsym $mod+m exec "bash ~/.config/rofi/applets/bin/mpd.sh"
+bindsym XF86PowerOff exec "bash ~/.config/rofi/powermenu/type-6/powermenu.sh"
+
+# Screenshot
+bindsym $mod+Shift+s exec flameshot gui
+
+# Appearance
+# No gaps (windows tile flush). Without gaps the focused window needs some
+# other cue, so we draw a thin accent border instead of none. Palette follows
+# the rest of the rice: Catppuccin Mocha base (#1e1e2e, same as the output bg
+# above) with the coral accent (#fb958b) that waybar uses.
+set $accent  #fb958b
+set $bg      #1e1e2e
+set $surface #313244
+set $overlay #6c7086
+set $text    #cdd6f4
+
+# class                   border   background  text     indicator  child_border
+client.focused            $accent  $accent     $bg      $accent    $accent
+client.focused_inactive   $surface $surface    $text    $surface   $surface
+client.unfocused          $bg      $bg         $overlay $bg        $surface
+client.urgent             #f38ba8  #f38ba8     $bg      #f38ba8    #f38ba8
+client.placeholder        $bg      $bg         $text    $bg        $bg
+
+default_border pixel 2
+default_floating_border pixel 2
+# Drop the border when a workspace holds a single tiled window, for a clean
+# edge-to-edge look; borders only appear once windows are actually split.
+smart_borders on
+
+# Small, space-efficient gaps: a thin gutter between windows and a slimmer
+# gap at the screen edges (2:1 ratio), with a touch more room up top so
+# windows don't butt right against waybar.
+gaps inner 6
+gaps outer 3
+gaps top 6
+
+# Titlebar font (only shows in tabbed/stacking layouts). JetBrainsMono Nerd
+# Font is already installed for kitty/waybar glyphs (see pkgs/theme).
+font pango:JetBrainsMono Nerd Font 10
+titlebar_padding 6 3
+titlebar_border_thickness 0
+
+# Bar and notifications: waybar and dunst are started as systemd user
+# services (see pkgs/waybar and pkgs/dunst), not execed from here.
+
+# GTK theme, icon theme, cursor: managed declaratively via home-manager's
+# gtk / home.pointerCursor modules (see pkgs/theme), not gsettings execs.
+
+# MPD, mpdscrobble, mpd-lyricsd, mpd-notify all run as systemd user
+# services now (see pkgs/music), not execed here.
+exec --no-startup-id kitty --class ncmpcpp "ncmpcpp"
+
+assign [app_id="Spotify"] workspace number 4
+assign [app_id="ncmpcpp"] workspace number 3
+
+# Brightness (nixpkgs removed `light`; using brightnessctl instead)
+bindsym F2 exec brightnessctl set 5%-
+bindsym F3 exec brightnessctl set +5%
+
+# Battery alert
+exec --no-startup-id ~/.config/battery-alert/battery-alert &
+
+# Startup sound: no sound file shipped with the adapted config (original
+# pointed at the author's own ~/.local/share/sounds/desktop-login.ogg).
+# Uncomment and point at your own file to enable:
+# exec --no-startup-id "paplay ~/.local/share/sounds/desktop-login.ogg"

@@ -1,0 +1,10 @@
+lyrics_path = "~/Music/.lyrics"
+
+[genius]
+# The original rice repo committed a live-looking Genius API access token
+# in this file. Not reusing someone else's leaked credential here - get
+# your own free one at https://genius.com/api-clients and paste it below.
+access_token = ""
+
+[mpd]
+address = "localhost:6600"
