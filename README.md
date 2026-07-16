@@ -13,6 +13,15 @@ nix build .#homeConfigurations.wsl.activationPackage
 ./result/activate
 ```
 
+From Fedora:
+
+```sh
+git clone git@github.com:joaolucasdp/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+nix build .#homeConfigurations.fedora.activationPackage
+./result/activate
+```
+
 From macOS:
 
 ```sh
@@ -80,4 +89,8 @@ cargo run
 - macOS uses the Bitwarden SSH Agent socket at `~/.bitwarden-ssh-agent.sock`.
 - The WSL profile is defined in `home-configurations/wsl`.
 - The macOS profile is defined in `home-configurations/macos`.
+- The Fedora profile is defined in `home-configurations/fedora` and ships the
+  Proton suite (`pkgs/proton.nix`): VPN, Pass, Mail/Calendar and Authenticator.
+- Proton VPN drives the host NetworkManager over D-Bus, so it needs
+  `NetworkManager` running on the Fedora side; Nix only provides the client.
 - Reusable Home Manager modules live in `pkgs`.
