@@ -93,4 +93,7 @@ cargo run
   Proton suite (`pkgs/proton.nix`): VPN, Pass, Mail/Calendar and Authenticator.
 - Proton VPN drives the host NetworkManager over D-Bus, so it needs
   `NetworkManager` running on the Fedora side; Nix only provides the client.
-- Reusable Home Manager modules live in `pkgs`.
+- Existing package-oriented Home Manager modules live in `pkgs`; standalone
+  option modules live in `modules`.
+- Free Claude Code is enabled in the common profile; package and module details
+  are documented in [`pkgs/free-claude-code/README.md`](pkgs/free-claude-code/README.md).

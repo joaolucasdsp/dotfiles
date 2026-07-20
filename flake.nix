@@ -50,12 +50,24 @@
       forEachSystem = lib.genAttrs systems;
     in
     {
-      homeConfigurations = builtins.mapAttrs (
-        configurationName: config:
-        homeLib.mkHome (config // { inherit configurationName; })
-      ) configurations;
+      homeConfigurations = builtins.mapAttrs
+        (
+          configurationName: config:
+            homeLib.mkHome (config // { inherit configurationName; })
+        )
+        configurations;
 
       templates = import ./templates;
+
+      packages = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          free-claude-code = pkgs.callPackage ./pkgs/free-claude-code { };
+        }
+      );
 
       formatter = forEachSystem (
         system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt
@@ -76,17 +88,20 @@
         }
       );
 
-      checks = builtins.foldl' (
-        checks: configurationName:
-        let
-          system = configurations.${configurationName}.system;
-        in
-        checks // {
-          ${system} = (checks.${system} or { }) // {
-            "home-${configurationName}" =
-              self.homeConfigurations.${configurationName}.activationPackage;
-          };
-        }
-      ) { } (builtins.attrNames configurations);
+      checks = builtins.foldl'
+        (
+          checks: configurationName:
+            let
+              system = configurations.${configurationName}.system;
+            in
+            checks // {
+              ${system} = (checks.${system} or { }) // {
+                "home-${configurationName}" =
+                  self.homeConfigurations.${configurationName}.activationPackage;
+              };
+            }
+        )
+        { }
+        (builtins.attrNames configurations);
     };
 }

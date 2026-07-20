@@ -2,6 +2,8 @@
 
 {
   imports = [
+    ../../modules/free-claude-code.nix
+
     # Shell
     ../../pkgs/bash.nix
     ../../pkgs/direnv.nix
@@ -18,6 +20,8 @@
     ../../pkgs/htop.nix
     ../../pkgs/trash-cli.nix
   ];
+
+  programs.free-claude-code.enable = true;
 
   home.packages = with pkgs; [
     ripgrep
