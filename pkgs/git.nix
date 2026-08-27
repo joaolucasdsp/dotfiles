@@ -34,7 +34,6 @@ in
 
     package = pkgs.gitFull;
 
-    # Commit signing with SSH (key served by the Proton Pass agent).
     signing = {
       format = "ssh";
       key = "~/${signingKeyFile}";
@@ -45,24 +44,16 @@ in
       user.name = "codando";
       user.email = "joaolwork@gmail.com";
       core.editor = "vim";
-      # gitFull bakes in an absolute path to nixpkgs' own OpenSSH. On non-NixOS
-      # hosts (e.g. Fedora) that upstream ssh reads the system's
-      # /etc/crypto-policies openssh.config but doesn't understand its Red Hat
-      # GSSAPIKexAlgorithms / mlkem KEX entries, so it aborts and pushes fail.
-      # Use the system ssh from PATH instead, which supports that config.
       core.sshCommand = "ssh";
       pull.rebase = true;
       merge.conflictstyle = "diff3";
       init.defaultBranch = "main";
-      # Verify signatures locally against ~/.ssh/allowed_signers
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
     };
 
-    # Global ignores
     ignores = [
       "*~"
       "*.swp"
-      # ".envrc"
       ".direnv"
     ];
   };

@@ -4,11 +4,9 @@
   imports = [
     ../../modules/free-claude-code.nix
 
-    # Shell
     ../../pkgs/bash.nix
     ../../pkgs/direnv.nix
 
-    # Core CLI
     ../../pkgs/editors/nvim
     ../../pkgs/tmux
     ../../pkgs/git.nix

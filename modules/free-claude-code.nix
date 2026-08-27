@@ -75,8 +75,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
-    # FCC_ENV_FILE makes config discovery deterministic even when a command is
-    # launched outside the user's home directory.
     home.sessionVariables = cfg.environmentVariables // {
       FCC_ENV_FILE = if cfg.configFile == null then managedEnvPath else cfg.configFile;
     };

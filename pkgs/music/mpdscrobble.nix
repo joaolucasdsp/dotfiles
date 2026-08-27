@@ -1,13 +1,10 @@
-# mpdscrobble (https://github.com/dbeley/mpdscrobble) isn't packaged in
-# nixpkgs; built here from the PyPI sdist since it's a plain Python package
-# with a clean setuptools build.
-{
-  buildPythonApplication,
-  fetchPypi,
-  setuptools,
-  httpx,
-  python-mpd2,
-  pylast,
+{ buildPythonApplication
+, fetchPypi
+, setuptools
+, httpx
+, python-mpd2
+, pylast
+,
 }:
 
 buildPythonApplication rec {
@@ -28,7 +25,6 @@ buildPythonApplication rec {
     pylast
   ];
 
-  # No tests published in the sdist.
   doCheck = false;
 
   meta = {

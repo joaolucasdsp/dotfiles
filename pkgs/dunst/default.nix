@@ -1,13 +1,6 @@
 { pkgs, ... }:
 
 {
-  # Adapted from https://github.com/LoneWolf4713/new-wave's dunstrc. The
-  # original had the [global]/[urgency_*] sections defined twice (merged by
-  # dunst's ini parser); folded into one section each here since Nix attrs
-  # can't have duplicate keys anyway. Also swapped the hardcoded
-  # /usr/bin/rofi and google-chrome-stable paths for PATH-relative lookups,
-  # and the missing "flattrcolor" icon theme for the Flat-Remix one we
-  # install (pkgs/waybar's sibling, see the sway GTK theme settings).
   services.dunst = {
     enable = true;
     iconTheme = {

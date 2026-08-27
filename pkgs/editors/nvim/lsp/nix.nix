@@ -1,7 +1,6 @@
 { pkgs, prelude, ... }:
 
 {
-  # `nil` is the maintained Nix language server (rnix-lsp is archived).
   programs.neovim.extraPackages = [ pkgs.nil ];
 
   programs.neovim.extraConfig = prelude.mkLuaCode ''

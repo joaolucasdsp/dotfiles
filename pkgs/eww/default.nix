@@ -1,18 +1,6 @@
 { pkgs, ... }:
 
 {
-  # Adapted from https://github.com/LoneWolf4713/new-wave's configs/eww.
-  # Note the original rice never actually enabled eww (its exec line was
-  # commented out in the sway config) - enabling it here since you asked
-  # for it specifically.
-  #
-  # Two scripts eww.yuck depends on weren't in the rice repo at all:
-  # - getSongDuration: written from scratch (pkgs/eww/getSongDuration).
-  # - the "music" script's fallback cover art
-  #   (~/.config/eww/dashboard/assets/fallback.png): pointed at a 1x1
-  #   placeholder instead (pkgs/eww/fallback.png).
-  # The lyrics poll reads ~/Music/.lyrics/lyrics.txt, written by
-  # mpd-lyricsd — see pkgs/music (task 4).
   programs.eww = {
     enable = true;
     yuckConfig = builtins.readFile ./eww.yuck;
@@ -44,8 +32,6 @@
     };
   };
 
-  # Opens the widget window once the eww daemon (started by
-  # programs.eww.systemd) is up.
   systemd.user.services.eww-open = {
     Unit = {
       Description = "Open the new-wave eww music widget";

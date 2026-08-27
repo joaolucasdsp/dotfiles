@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 let
-  # Base16-shell fork that updates weekly
   base16-shell = pkgs.fetchFromGitHub {
     owner = "fnune";
     repo = "base16-shell";

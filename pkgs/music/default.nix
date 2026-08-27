@@ -5,15 +5,6 @@ let
   mpd-lyricsd = pkgs.callPackage ./mpd-lyricsd.nix { };
 in
 {
-  # Adapted from https://github.com/LoneWolf4713/new-wave's mpd/ncmpcpp/
-  # mpdscrobble/mpd-lyricsd setup. Two packages aren't in nixpkgs and are
-  # built from source here (see mpdscrobble.nix, mpd-lyricsd.nix) - the
-  # latter patched per the rice's own README instructions (fixed lyrics.txt
-  # output instead of one file per song).
-  #
-  # Everything that used to be `exec`'d from the sway config (mpd itself,
-  # mpdscrobble, mpd-lyricsd, mpd-notify) now runs as a proper systemd user
-  # service instead, same reasoning as waybar/dunst/eww.
   services.mpd = {
     enable = true;
     musicDirectory = "${config.home.homeDirectory}/Music";
@@ -44,12 +35,9 @@ in
 
   xdg.configFile."ncmpcpp/config".source = ./ncmpcpp.conf;
 
-  # mpdscrobble: fill in ~/.config/mpdscrobble/mpdscrobble.conf yourself
-  # (Last.fm and/or ListenBrainz credentials) - the shipped template has
-  # empty fields, the original rice's committed one did too.
   xdg.configFile."mpdscrobble/mpdscrobble.conf" = {
     source = ./mpdscrobble.conf;
-    force = false; # don't clobber credentials you fill in by hand
+    force = false;
   };
 
   systemd.user.services.mpdscrobble = {
@@ -61,10 +49,6 @@ in
     Install.WantedBy = [ "default.target" ];
   };
 
-  # mpd-lyricsd: fill in your own Genius API token in
-  # ~/.config/mpd-lyricsd/config.toml (see the file's comment) - the
-  # original rice repo committed what looks like the author's own live
-  # token, which isn't reused here.
   xdg.configFile."mpd-lyricsd/config.toml" = {
     source = ./mpd-lyricsd-config.toml;
     force = false;

@@ -1,9 +1,6 @@
 { ... }:
 
 {
-  # Terminal used across the rice: sway's $term and the `Mod+Return` binding
-  # both point at kitty (see pkgs/sway/config). Colors match the sway borders
-  # and output bg — Catppuccin Mocha, same #1e1e2e base.
   programs.kitty = {
     enable = true;
 
@@ -20,7 +17,6 @@
       enable_audio_bell = "no";
       scrollback_lines = 10000;
 
-      # Catppuccin Mocha
       foreground = "#CDD6F4";
       background = "#1E1E2E";
       selection_foreground = "#1E1E2E";

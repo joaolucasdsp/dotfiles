@@ -15,8 +15,6 @@
       homeLib = import ./lib inputs;
       lib = nixpkgs.lib;
 
-      # Add future Home Manager environments here. The outputs below are
-      # generated automatically for every declared configuration and system.
       configurations = {
         wsl = {
           system = "x86_64-linux";
