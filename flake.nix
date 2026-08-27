@@ -57,16 +57,6 @@
 
       templates = import ./templates;
 
-      packages = forEachSystem (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          free-claude-code = pkgs.callPackage ./pkgs/free-claude-code { };
-        }
-      );
-
       formatter = forEachSystem (
         system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt
       );

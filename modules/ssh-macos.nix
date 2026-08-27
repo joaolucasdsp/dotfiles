@@ -1,5 +1,5 @@
 {
-  imports = [ ./ssh-common.nix ];
+  imports = [ ./ssh.nix ];
 
   programs.ssh.includes = [ "~/.orbstack/ssh/config" ];
 }

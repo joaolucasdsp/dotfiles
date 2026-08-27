@@ -2,24 +2,20 @@
 
 {
   imports = [
-    ../../modules/free-claude-code.nix
+    ../../modules/bash.nix
+    ../../modules/direnv.nix
 
-    ../../pkgs/bash.nix
-    ../../pkgs/direnv.nix
-
-    ../../pkgs/editors/nvim
-    ../../pkgs/tmux
-    ../../pkgs/git.nix
-    ../../pkgs/fzf.nix
-    ../../pkgs/zoxide.nix
-    ../../pkgs/eza.nix
-    ../../pkgs/bat.nix
-    ../../pkgs/jq.nix
-    ../../pkgs/htop.nix
-    ../../pkgs/trash-cli.nix
+    ../../modules/editors/nvim
+    ../../modules/tmux
+    ../../modules/git.nix
+    ../../modules/fzf.nix
+    ../../modules/zoxide.nix
+    ../../modules/eza.nix
+    ../../modules/bat.nix
+    ../../modules/jq.nix
+    ../../modules/htop.nix
+    ../../modules/trash-cli.nix
   ];
-
-  programs.free-claude-code.enable = true;
 
   home.packages = with pkgs; [
     ripgrep
