@@ -30,10 +30,10 @@
     ncdu
     tealdeer
     nb
+    proton-pass-cli
   ];
 
-  programs.bash.shellAliases.rb =
-    "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
+  programs.bash.shellAliases.rb = "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
 
   programs.home-manager.enable = true;
 }

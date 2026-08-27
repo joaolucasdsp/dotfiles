@@ -34,7 +34,7 @@ in
 
     package = pkgs.gitFull;
 
-    # Commit signing with SSH (key served by the Bitwarden agent).
+    # Commit signing with SSH (key served by the Proton Pass agent).
     signing = {
       format = "ssh";
       key = "~/${signingKeyFile}";
