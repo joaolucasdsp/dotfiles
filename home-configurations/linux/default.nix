@@ -3,6 +3,6 @@
     ../common
     ../../modules/readline
     ../../modules/base16-shell.nix
-    ../../modules/ssh.nix
+    ../../modules/ssh-linux.nix
   ];
 }
