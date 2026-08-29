@@ -1,0 +1,16 @@
+{ pkgs, ... }:
+
+{
+  home.file."battery-alert-script" = {
+    target = ".config/battery-alert/battery-alert";
+    source = ./battery-alert;
+    executable = true;
+  };
+
+  xdg.configFile."flameshot/flameshot.ini".text = ''
+    [General]
+    useGrimAdapter=true
+  '';
+
+  home.packages = with pkgs; [ libnotify ];
+}

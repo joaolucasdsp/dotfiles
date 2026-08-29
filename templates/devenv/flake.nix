@@ -15,14 +15,9 @@
           inherit inputs pkgs;
           modules = [
             {
-              # https://devenv.sh/languages/
-              languages = {
-                # put programming languages here
-              };
+              languages = { };
 
-              # https://devenv.sh/reference/options/
               packages = with pkgs; [
-                # put your packages here
                 nil
               ];
 

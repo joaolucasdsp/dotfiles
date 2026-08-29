@@ -15,8 +15,6 @@
       homeLib = import ./lib inputs;
       lib = nixpkgs.lib;
 
-      # Add future Home Manager environments here. The outputs below are
-      # generated automatically for every declared configuration and system.
       configurations = {
         wsl = {
           system = "x86_64-linux";
@@ -50,10 +48,12 @@
       forEachSystem = lib.genAttrs systems;
     in
     {
-      homeConfigurations = builtins.mapAttrs (
-        configurationName: config:
-        homeLib.mkHome (config // { inherit configurationName; })
-      ) configurations;
+      homeConfigurations = builtins.mapAttrs
+        (
+          configurationName: config:
+            homeLib.mkHome (config // { inherit configurationName; })
+        )
+        configurations;
 
       templates = import ./templates;
 
@@ -76,17 +76,20 @@
         }
       );
 
-      checks = builtins.foldl' (
-        checks: configurationName:
-        let
-          system = configurations.${configurationName}.system;
-        in
-        checks // {
-          ${system} = (checks.${system} or { }) // {
-            "home-${configurationName}" =
-              self.homeConfigurations.${configurationName}.activationPackage;
-          };
-        }
-      ) { } (builtins.attrNames configurations);
+      checks = builtins.foldl'
+        (
+          checks: configurationName:
+            let
+              system = configurations.${configurationName}.system;
+            in
+            checks // {
+              ${system} = (checks.${system} or { }) // {
+                "home-${configurationName}" =
+                  self.homeConfigurations.${configurationName}.activationPackage;
+              };
+            }
+        )
+        { }
+        (builtins.attrNames configurations);
     };
 }

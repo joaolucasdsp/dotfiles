@@ -2,21 +2,19 @@
 
 {
   imports = [
-    # Shell
-    ../../pkgs/bash.nix
-    ../../pkgs/direnv.nix
+    ../../modules/bash.nix
+    ../../modules/direnv.nix
 
-    # Core CLI
-    ../../pkgs/editors/nvim
-    ../../pkgs/tmux
-    ../../pkgs/git.nix
-    ../../pkgs/fzf.nix
-    ../../pkgs/zoxide.nix
-    ../../pkgs/eza.nix
-    ../../pkgs/bat.nix
-    ../../pkgs/jq.nix
-    ../../pkgs/htop.nix
-    ../../pkgs/trash-cli.nix
+    ../../modules/editors/nvim
+    ../../modules/tmux
+    ../../modules/git.nix
+    ../../modules/fzf.nix
+    ../../modules/zoxide.nix
+    ../../modules/eza.nix
+    ../../modules/bat.nix
+    ../../modules/jq.nix
+    ../../modules/htop.nix
+    ../../modules/trash-cli.nix
   ];
 
   home.packages = with pkgs; [
@@ -26,10 +24,10 @@
     ncdu
     tealdeer
     nb
+    proton-pass-cli
   ];
 
-  programs.bash.shellAliases.rb =
-    "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
+  programs.bash.shellAliases.rb = "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
 
   programs.home-manager.enable = true;
 }

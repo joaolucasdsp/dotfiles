@@ -1,0 +1,98 @@
+{ pkgs, config, ... }:
+
+let
+  complete-alias = pkgs.fetchFromGitHub {
+    owner = "cykerway";
+    repo = "complete-alias";
+    rev = "b16b183f6bf0029b9714b0e0178b6bd28eda52f3";
+    sha256 = "sha256-Yu4X7SDlu6sbIuO5rerjEcvfExYFBMymmBXIvYD7eqg=";
+  };
+  tab-completion = pkgs.fetchFromGitHub {
+    owner = "lincheney";
+    repo = "fzf-tab-completion";
+    rev = "53eb325f573265a6105c9bd0aa56cd865c4e14b7";
+    sha256 = "sha256-hvlz8/mdg9spKy2RLhqPukqdawd9+MEvW31smCsuUhA=";
+  };
+  ble-sh = pkgs.fetchFromGitHub {
+    owner = "akinomyoga";
+    repo = "ble.sh";
+    rev = "e5d8d00cf52bb899af0ecab563be12dfc11451ba";
+    sha256 = "sha256-qbJ7cCfI0oXUuwUTFyRgqtUQArQEzJ+R4Q4Un5uY0JM=";
+  };
+in
+{
+  programs.bash = {
+    enable = true;
+    historySize = 10000;
+    shellOptions = [
+      "autocd"
+
+      "histappend"
+
+      "checkwinsize"
+
+      "extglob"
+      "globstar"
+
+      "checkjobs"
+    ];
+
+    initExtra = ''
+            parse_git_branch() {
+              git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+            }
+
+            export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\e[91m\]\$(parse_git_branch)\[\033[00m\]\$ "
+
+            # --- Vi mode ---
+            set -o vi
+            bind -m vi-insert 'Control-l: clear-screen'
+
+            # --- Complete aliases ---
+            . ${complete-alias}/complete_alias
+            complete -F _complete_alias $( \
+              alias | perl -lne 'print "$1 " if /^alias ([^=]*)=/' )
+
+            # --- Tab completion ---
+            . ${tab-completion}/bash/fzf-bash-completion.sh
+            bind -x '"\t": fzf_bash_completion'
+
+            # --- Colored man pages ---
+            export LESS_TERMCAP_mb=$'\e[1;32m'
+            export LESS_TERMCAP_md=$'\e[1;32m'
+            export LESS_TERMCAP_me=$'\e[0m'
+            export LESS_TERMCAP_se=$'\e[0m'
+            export LESS_TERMCAP_so=$'\e[01;33m'
+            export LESS_TERMCAP_ue=$'\e[0m'
+            export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+            export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+            export DOTNET_ROOT=$HOME/.dotnet
+            export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
+    '';
+
+    historyControl = [
+      "erasedups"
+      "ignoredups"
+      "ignorespace"
+    ];
+
+    shellAliases = {
+      c = "clear";
+      b = "cd -";
+      se = "sudoedit";
+      ns = "nix-shell -p";
+      nq = "nix search nixpkgs";
+      nd = "nix develop";
+      cvi = "convco commit --interactive";
+    };
+  };
+
+  home.sessionVariables = {
+    EDITOR = "vim";
+    FZF_DEFAULT_OPTS = ''--prompt \" λ \"'';
+  };
+}
