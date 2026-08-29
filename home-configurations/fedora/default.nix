@@ -19,6 +19,9 @@
     pfetch
     spotify-player
     claude-code
+    nodejs_22
+    gitkraken
+    proton-pass-cli
   ];
 
   targets.genericLinux.enable = true;

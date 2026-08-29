@@ -21,6 +21,10 @@ set $menu "bash ~/.config/rofi/launchers/type-7/launcher.sh"
 output * bg #1e1e2e solid_color
 
 ### Input
+input "type:keyboard" {
+    xkb_layout "us,br"
+}
+
 input "type:touchpad" {
     dwt enabled
     tap enabled
@@ -118,6 +122,9 @@ bindsym XF86PowerOff exec "bash ~/.config/rofi/powermenu/type-6/powermenu.sh"
 
 # Screenshot
 bindsym $mod+Shift+s exec flameshot gui
+
+# Toggle keyboard layout between us and br
+bindsym Mod1+k input type:keyboard xkb_switch_layout next
 
 # Appearance
 # No gaps (windows tile flush). Without gaps the focused window needs some

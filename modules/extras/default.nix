@@ -7,10 +7,7 @@
     executable = true;
   };
 
-  xdg.configFile."flameshot/flameshot.ini".text = ''
-    [General]
-    useGrimAdapter=true
-  '';
+  xdg.configFile."flameshot/flameshot.ini".text = "";
 
   home.packages = with pkgs; [ libnotify ];
 }
