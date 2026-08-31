@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     brightnessctl
-    swaylock
   ];
 
   xdg.configFile."sway/config.d/90-bar.conf".text = ''
