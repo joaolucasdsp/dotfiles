@@ -22,6 +22,7 @@
     nodejs_22
     gitkraken
     proton-pass-cli
+    lazygit
   ];
 
   targets.genericLinux.enable = true;
