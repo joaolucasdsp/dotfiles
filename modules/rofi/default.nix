@@ -11,4 +11,6 @@
     source = ./rofi;
     recursive = true;
   };
+
+  home.file.".local/share/fonts/feather.ttf".source = ./fonts/feather.ttf;
 }
