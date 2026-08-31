@@ -42,7 +42,7 @@ in
 
     settings = {
       user.name = "codando";
-      user.email = "joaolwork@gmail.com";
+      user.email = "joaop.dev@codando.tech";
       core.editor = "vim";
       core.sshCommand = "ssh";
       pull.rebase = true;
