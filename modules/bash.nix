@@ -71,7 +71,7 @@ in
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
             export DOTNET_ROOT=$HOME/.dotnet
-            export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
+            export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/.local/bin
 
             # Se o executável do Nix existir e não for a shell atual, substitui o processo
             if [ -x ~/.nix-profile/bin/bash ] && [ "$BASH" != "$HOME/.nix-profile/bin/bash" ]; then
