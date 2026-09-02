@@ -1,0 +1,8 @@
+keys:
+  - &fedora age10lqx8em4ny3002znraa9q54h4uqdvfmnnl7qldec689fms23j5fqrzx5wh
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *fedora
