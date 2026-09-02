@@ -65,6 +65,7 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          dotnetSdk = pkgs.dotnetCorePackages.sdk_8_0;
         in
         {
           default = pkgs.mkShell {
@@ -72,6 +73,17 @@
               nil
               nixpkgs-fmt
             ];
+          };
+
+          dotnet = pkgs.mkShell {
+            packages = [
+              dotnetSdk
+              pkgs.nodejs_22
+            ];
+
+            DOTNET_ROOT = "${dotnetSdk}/share/dotnet";
+            DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+            DOTNET_NOLOGO = "1";
           };
         }
       );
