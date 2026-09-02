@@ -18,7 +18,7 @@
   home.packages = with pkgs; [
     pfetch
     spotify-player
-    claude-code
+    #claude-code
     nodejs_22
     gitkraken
     proton-pass-cli
