@@ -1,0 +1,87 @@
+{
+  "nodes": {
+    "lean4": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-old": "nixpkgs-old",
+        "nixpkgs-older": "nixpkgs-older"
+      },
+      "locked": {
+        "lastModified": 1788367229,
+        "narHash": "sha256-YQsOO7zRT+WW+oHNWOYqhD17bGLoIlCi65uJtDtODOg=",
+        "owner": "leanprover",
+        "repo": "lean4",
+        "rev": "19c79593c47bb8dd3371327c08fc80775d8488af",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leanprover",
+        "repo": "lean4",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1769018530,
+        "narHash": "sha256-S/5RU76BdQ32bbE99a+G9gMuatpVWEvIfeSjEqyoFS4=",
+        "rev": "88d3861acdd3d2f0e361767018218e51810df8a1",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre931542.88d3861acdd3/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
+      }
+    },
+    "nixpkgs-old": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1582018169,
+        "narHash": "sha256-qv1iK1IchpZKSeWL3NEs4U5Jl5QVyNHDdiMJvLOI4Yc=",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/19.03/nixos-19.03.173691.34c7eb7545d/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-19.03/nixexprs.tar.xz"
+      }
+    },
+    "nixpkgs-older": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1550657948,
+        "narHash": "sha256-BE0XqzNfzvhhtTXv37LyySyq4moL7z1i1hMvwbFNL/I=",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/18.03/nixos-18.03.133402.cb0e20d6db9/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-18.03/nixexprs.tar.xz"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1788316716,
+        "narHash": "sha256-bc7rSpXIdn9QWGNqfWcPZWOhEVF8NoeAZkWq0XWnf/k=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "lean4": "lean4",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

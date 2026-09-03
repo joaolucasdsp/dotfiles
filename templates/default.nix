@@ -4,33 +4,53 @@
     path = ./basic;
   };
 
-  lean4 = {
-    description = "A lean4 project template";
-    path = ./lean4;
-  };
-
-  python = {
-    description = "A python project template using devenv";
-    path = ./python;
-  };
-
   devenv = {
     description = "A simple devenv flake";
     path = ./devenv;
   };
 
   c = {
-    description = "A simple C flake";
+    description = "A C project template using CMake";
     path = ./c;
   };
 
-  rust = {
-    description = "A simple Rust flake";
-    path = ./rust;
+  go = {
+    description = "A Go project template";
+    path = ./go;
+  };
+
+  haskell = {
+    description = "A Haskell project template";
+    path = ./haskell;
+  };
+
+  lean4 = {
+    description = "A Lean 4 project template";
+    path = ./lean4;
+  };
+
+  node = {
+    description = "A Node.js project template";
+    path = ./node;
   };
 
   ocaml = {
-    description = "A simple OCaml project using Dune";
+    description = "An OCaml project template using Dune";
     path = ./ocaml;
+  };
+
+  python = {
+    description = "A Python project template using devenv";
+    path = ./python;
+  };
+
+  rust = {
+    description = "A Rust project template";
+    path = ./rust;
+  };
+
+  zig = {
+    description = "A Zig project template";
+    path = ./zig;
   };
 }

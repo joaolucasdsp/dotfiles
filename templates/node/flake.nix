@@ -1,5 +1,5 @@
 {
-  description = "An OCaml project template using Dune";
+  description = "A Node.js project template";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -15,22 +15,14 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          ocaml-run = pkgs.writeShellScriptBin "ocaml-run" ''
-            exec dune exec ./bin/main.exe -- "$@"
-          '';
         in
         {
           default = pkgs.mkShell {
-            packages = (with pkgs.ocamlPackages; [
-              ocaml
-              dune_3
-              findlib
-              ocaml-lsp
-              ocamlformat
-              utop
-            ]) ++ [
-              pkgs.nil
-              ocaml-run
+            packages = with pkgs; [
+              nodejs_22
+              typescript-language-server
+
+              nil
             ];
           };
         }
