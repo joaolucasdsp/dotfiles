@@ -25,6 +25,7 @@
     tealdeer
     nb
     proton-pass-cli
+    bruno
   ];
 
   programs.bash.shellAliases.rb = "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
