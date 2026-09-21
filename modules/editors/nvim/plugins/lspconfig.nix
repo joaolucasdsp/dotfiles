@@ -25,22 +25,6 @@ let
         },
       })
 
-      -- Add borders to lsp hover and signature popups
-      vim.lsp.handlers["textDocument/hover"] =
-        vim.lsp.with(
-        vim.lsp.handlers.hover,
-        {
-          border = "single"
-        }
-      )
-      vim.lsp.handlers["textDocument/signatureHelp"] =
-        vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        {
-          border = "single"
-        }
-      )
-
       -- This function needs to be global, so that other lsp configs inside
       -- ./lsp will be able to reference it in their setup.
       _G.on_attach = function(client, bufnr)
@@ -55,7 +39,8 @@ let
         -- Updated diagnostic navigation for Neovim 0.11+
         buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
         buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
-        buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<cr>', opts)
+        buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover({ border = "single" })<cr>', opts)
+        buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help({ border = "single" })<cr>', opts)
 
         buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
         buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
