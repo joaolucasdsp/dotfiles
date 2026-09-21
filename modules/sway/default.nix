@@ -5,6 +5,10 @@
     brightnessctl
   ];
 
+  xdg.configFile."sway/environment".text = ''
+    SWAY_EXTRA_ARGS="--unsupported-gpu"
+  '';
+
   xdg.configFile."sway/config.d/90-bar.conf".text = ''
     # Intentionally empty. Shadows Fedora's /usr/share/sway/config.d/90-bar.conf
     # so it doesn't start a second waybar; ours runs as a systemd user service.
