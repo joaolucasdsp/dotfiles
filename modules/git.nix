@@ -51,9 +51,37 @@ in
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
     };
 
+    # Espelha projects-workspace/.gitignore_global. Aquele arquivo continua a
+    # valer para as máquinas macOS e Windows, que o ativam pelo bootstrap.sh;
+    # aqui o config global é somente leitura, então a lista vem declarada.
     ignores = [
+      # macOS
+      ".DS_Store"
+      ".AppleDouble"
+      ".LSOverride"
+      "Icon"
+
+      # Windows
+      "Thumbs.db"
+      "ehthumbs.db"
+      "Desktop.ini"
+      "$RECYCLE.BIN/"
+
+      # Linux
       "*~"
+      ".directory"
+      ".Trash-*"
+
+      # Editores / IDEs
+      ".vscode/"
+      ".idea/"
       "*.swp"
+      "*.swo"
+      "*.sublime-workspace"
+
+      # Ambientes locais / segredos
+      ".env"
+      ".env.local"
       ".direnv"
     ];
   };
