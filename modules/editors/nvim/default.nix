@@ -21,6 +21,7 @@ in
     ./plugins/zen-mode.nix
     ./plugins/autopairs.nix
     ./plugins/fzf-lua.nix
+    ./plugins/trouble.nix
     ./plugins/render-markdown.nix
     ./plugins/claudecode.nix
     ./plugins/slash.nix
