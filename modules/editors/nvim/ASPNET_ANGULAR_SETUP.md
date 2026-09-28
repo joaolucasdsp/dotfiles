@@ -8,11 +8,11 @@
 cd ~/projects/juno/site
 devenv shell
 dotnet restore
-dotnet build  # CRÍTICO - Gera os metadados para o LSP
+dotnet build
 nvim .
 ```
 
-O OmniSharp precisa dos arquivos compilados (`.dll`) para descompilar bibliotecas e mostrar código-fonte.
+O `dotnet restore` é o passo CRÍTICO. O roslyn-ls carrega a solution com o MSBuild do .NET SDK que está no `PATH`. Sem `dotnet restore`, as referências NuGet não resolvem e o LSP mostra erros em tipos de bibliotecas.
 
 ---
 
@@ -30,78 +30,56 @@ O OmniSharp precisa dos arquivos compilados (`.dll`) para descompilar biblioteca
   - `<leader>du` - Toggle debug UI
 
 ### 2. **Formatting Support** ✅
-- Added `conform.nvim` for Visual Studio-style formatting
+- `conform.nvim` formats on save
 - Configured formatters:
-  - **C#**: `csharpier` (Visual Studio formatting style)
+  - **C#**: roslyn-ls, through conform's language server fallback (honors `.editorconfig`)
   - **TypeScript/JavaScript**: `prettier`
   - **HTML/Angular templates**: `prettier`
   - **CSS/SCSS**: `prettier`
   - **JSON**: `prettier`
-- Format on save enabled
 - Keybinding: `<leader>lf` - Format current buffer
 
 ### 3. **LSP Configuration** ✅
-Already configured (no changes needed):
-- C# LSP with enhanced navigation
-- Angular LSP
-- TypeScript LSP
+The Neovim config installs these servers, so they work outside a project shell:
+- **C#**: [roslyn.nvim](https://github.com/seblyng/roslyn.nvim) with `roslyn-ls` (`Microsoft.CodeAnalysis.LanguageServer`), the server the VS Code C# extension uses
+- **Angular templates and components**: `angular-language-server` (`ngserver`)
+- **TypeScript**: `typescript-language-server`
+- **HTML and CSS/SCSS**: `vscode-langservers-extracted`
+
+A project shell wins when it provides its own copy of a server, because the Neovim config appends its servers to the end of `PATH`.
+
+Files named `*.component.html` open as `htmlangular`, so both the Angular and the HTML servers attach to them.
 
 ## Required packages in your project's flake.nix
 
-Make sure your project's `devenv.nix` or `flake.nix` includes:
-
-```nix
-{
-  # For debugging
-  netcoredbg  # C# debugger
-  
-  # For formatting
-  csharpier   # C# formatter (Visual Studio style)
-  nodePackages.prettier  # JS/TS/HTML/CSS formatter
-  
-  # For LSP (you should already have these)
-  csharp-ls   # C# language server
-  nodePackages.typescript-language-server
-  nodePackages."@angular/language-server"
-}
-```
+Make sure your project's `devenv.nix` or `flake.nix` includes these packages:
+- `dotnetCorePackages.sdk_8_0`: the .NET SDK that roslyn-ls uses to load the solution
+- `netcoredbg`: the C# debugger
+- `nodePackages.prettier`: the JS/TS/HTML/CSS formatter
 
 ### Important: C# Metadata Support
 
-The `csharp-ls` LSP is now configured to:
-- ✅ Load library metadata on demand
-- ✅ Navigate to decompiled source code of .NET libraries
-- ✅ Provide better IntelliSense for external dependencies
+roslyn-ls navigates into library code without extra plugins:
+- ✅ `gd` on a type from a NuGet package or the .NET SDK opens its decompiled source
+- ✅ Completion lists types from namespaces you have not imported yet and adds the `using`
+- ✅ Diagnostics cover the whole solution, not only the open files
 
-**How it works:**
-- When you use `gd` (go to definition) on a method from a library or .NET SDK, the LSP will decompile the source and show it to you
-- The `csharpls-extended-lsp-nvim` plugin enhances navigation to metadata
-
-**Note:** Make sure your project has a `.sln` or `.csproj` file in the root. The LSP uses this to understand your project structure and dependencies.
+**Note:** Make sure your project has a `.sln`, `.slnx`, or `.csproj` file. roslyn.nvim searches upward from the open file for a solution. If the directory has more than one solution, choose one with `:Roslyn target`.
 
 ## Usage
 
 ### Preparando o projeto para LSP funcionar completamente
 
-**IMPORTANTE:** Para o OmniSharp ter acesso aos metadados das bibliotecas e permitir navegação em código decompilado:
+**IMPORTANTE:** Para o roslyn-ls resolver as bibliotecas e navegar no código decompilado:
 
-```bash
-cd ~/projects/juno/site
+1. Restore das dependências (CRÍTICO): `dotnet restore`
+2. Build completo do projeto: `dotnet build`
+3. Agora abra o Neovim: `nvim .`
 
-# 1. Restore das dependências
-dotnet restore
-
-# 2. Build completo do projeto (CRÍTICO para metadata)
-dotnet build
-
-# 3. Agora abra o Neovim
-nvim .
-```
-
-**Por que o build é necessário?**
-- O OmniSharp precisa dos arquivos `.dll` compilados para descompilar o código das bibliotecas
-- Sem build, o LSP não consegue acessar os metadados do .NET SDK e NuGet packages
-- É o mesmo comportamento do Visual Studio - ele também precisa buildar primeiro
+**Por que o restore é necessário?**
+- O roslyn-ls carrega os projetos com o MSBuild, e o MSBuild precisa do `project.assets.json` que o `dotnet restore` gera
+- Sem restore, o LSP não encontra os assemblies dos pacotes NuGet e não consegue decompilar o código deles
+- É o mesmo comportamento do Visual Studio - ele também faz restore antes de carregar a solution
 
 ### Debugging
 1. Set breakpoints with `<leader>dd`
@@ -112,12 +90,12 @@ nvim .
 ### Formatting
 - Auto-format on save (enabled by default)
 - Manual format: `<leader>lf`
-- C# files will be formatted with csharpier (Visual Studio style)
-- TypeScript/HTML/CSS files will be formatted with prettier
+- C# files are formatted by roslyn-ls
+- TypeScript/HTML/CSS files are formatted with prettier
 
 ### LSP Features
 - `gd` - Go to definition
-- `gr` - Find references
+- `gr` - List references
 - `K` - Show documentation
 - `<leader>lr` - Rename
 - `<leader>la` - Code actions
@@ -129,59 +107,48 @@ nvim .
 
 If you see errors on methods from .NET libraries (like `String.Format`, `List<T>.Add`, etc.) or basic types like `System.Object`, `System.Boolean`:
 
-**This usually means the LSP can't find your project structure. Follow these steps:**
+**This usually means roslyn-ls could not load your project. Follow these steps:**
 
-1. **CRITICAL: Verify project structure** 
-   - Open the `.sln` file if you have one, OR
-   - Open Neovim from the directory containing your `.csproj` file
-   - The LSP needs to start from a directory with `.sln` or `.csproj`
+1. **CRITICAL: Verify project structure**
+   - Open Neovim from a directory at or below the `.sln`, `.slnx`, or `.csproj` file
+   - If there are several solutions, run `:Roslyn target` and pick one
 
-2. **Restore NuGet packages**
+2. **Restore NuGet packages** from your project root, for example `~/projects/juno/site`
    ```bash
-   cd ~/projects/juno/site  # Your project root
    dotnet restore
-   dotnet build  # Build to ensure everything is resolved
+   dotnet build
    ```
 
-3. **Restart LSP in Neovim**
+3. **Restart the LSP in Neovim**
    ```vim
-   :LspRestart
+   :lsp restart roslyn
    ```
 
-4. **Check LSP root directory**
+4. **Check the LSP root directory**
    ```vim
-   :LspInfo
+   :checkhealth vim.lsp
    ```
-   Look for "Root directory" - it should point to your project folder with `.sln` or `.csproj`
+   Look for the `roslyn` client and its root directory. It should point to your project folder.
 
-5. **Wait for indexing** - First time can take 1-2 minutes. Watch the LSP status in the bottom right.
+5. **Wait for the project to load** - roslyn.nvim shows `Roslyn project initialization complete` when it is ready. Large solutions take 30s - 2min the first time.
 
 **If still not working:**
-- Make sure you're running Neovim from inside `devenv shell` or `nix develop`
-- Check if `csharp-ls` can find the .NET SDK: `csharp-ls --version`
-- Try opening a C# file AFTER the solution/project file is recognized
+- Make sure you're running Neovim from inside `devenv shell` or `nix develop`, so the project's .NET SDK is on `PATH`
+- Check that the SDK is visible: `dotnet --list-sdks`
 
 ### Metadata navigation not working
 
 If `gd` doesn't navigate to library source code or shows empty files:
 
-1. **BUILD YOUR PROJECT FIRST** (most common issue):
+1. **RESTORE YOUR PROJECT FIRST** (most common issue):
    ```bash
-   dotnet clean
    dotnet restore
    dotnet build
    ```
 
-2. Make sure `omnisharp-extended-lsp-nvim` plugin is loaded (check with `:checkhealth`)
+2. Restart roslyn-ls: `:lsp restart roslyn`
 
-3. Restart OmniSharp: `:LspRestart`
-
-4. Check if build artifacts exist:
-   ```bash
-   ls bin/Debug/  # Should have .dll files
-   ```
-
-5. OmniSharp takes longer to index than csharp-ls (30s - 2min for large projects)
+3. Wait until roslyn.nvim reports that the project initialization is complete
 
 ### For devenv users
 
@@ -203,7 +170,6 @@ If using `devenv`, your setup in `devenv.nix` should include:
 
   packages = with pkgs; [
     netcoredbg
-    csharpier
     nodePackages.prettier
   ];
 }

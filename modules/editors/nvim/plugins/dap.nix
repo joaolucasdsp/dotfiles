@@ -1,57 +1,63 @@
-{ pkgs, prelude, ... }:
+{ pkgs, ... }:
 
 let
   dap = {
     plugin = pkgs.vimPlugins.nvim-dap;
-    type = "viml";
+    type = "lua";
     config = ''
-        nnoremap <leader>dd <cmd>lua require('dap').toggle_breakpoint()<cr>
-        nnoremap <leader>dD <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>
-        nnoremap <leader>df :lua require('dap').continue()<cr>
-        nnoremap <leader>dj <cmd>lua require('dap').step_out()<cr>
-        nnoremap <leader>dk <cmd>lua require('dap').step_into()<cr>
-        nnoremap <leader>dl <cmd>lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>
-        nnoremap <leader>dr <cmd>lua require('dap').repl.open()<cr>
+      local dap = require("dap")
 
-        ${prelude.mkLuaCode ''
-        -- require('dap.ext.vscode').load_launchjs()
+      dap.adapters.python = {
+        type = "executable",
+        command = "python",
+        args = { "-m", "debugpy.adapter" },
+      }
 
-        local dap = require('dap')
+      dap.configurations.python = {
+        {
+          type = "python",
+          request = "launch",
+          name = "Launch file",
+          program = "''${fileDirname}",
+        },
+      }
 
-        -- Python configuration
-        dap.configurations.python = {
-          {
-            type = 'python';
-            request = 'launch';
-            name = "Launch file";
-            program = "''${fileDirname}";
-          },
-        }
+      dap.adapters.coreclr = {
+        type = "executable",
+        command = "netcoredbg",
+        args = { "--interpreter=vscode" },
+      }
 
-        dap.adapters.python = {
-          type = 'executable';
-          command = 'python';
-          args = { '-m', 'debugpy.adapter' };
-        }
+      dap.configurations.cs = {
+        {
+          type = "coreclr",
+          name = "launch - netcoredbg",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/bin/Debug/", "file")
+          end,
+        },
+      }
 
-        -- C# / .NET Core configuration
-        dap.adapters.coreclr = {
-          type = 'executable',
-          command = 'netcoredbg',
-          args = {'--interpreter=vscode'}
-        }
+      local keymaps = {
+        ["<leader>dd"] = { dap.toggle_breakpoint, "Toggle breakpoint" },
+        ["<leader>dD"] = {
+          function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+          "Set conditional breakpoint",
+        },
+        ["<leader>dl"] = {
+          function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end,
+          "Set log point",
+        },
+        ["<leader>df"] = { dap.continue, "Start or continue debugging" },
+        ["<leader>dj"] = { dap.step_out, "Step out" },
+        ["<leader>dk"] = { dap.step_into, "Step into" },
+        ["<leader>dr"] = { function() dap.repl.open() end, "Open debug REPL" },
+      }
 
-        dap.configurations.cs = {
-          {
-            type = "coreclr",
-            name = "launch - netcoredbg",
-            request = "launch",
-            program = function()
-              return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-            end,
-          },
-        }
-      ''}
+      for lhs, map in pairs(keymaps) do
+        vim.keymap.set("n", lhs, map[1], { desc = map[2] })
+      end
     '';
   };
 in

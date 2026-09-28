@@ -1,57 +1,27 @@
-{ pkgs, prelude, ... }:
+{ pkgs, ... }:
 
 let
   nvim-tree = {
     plugin = pkgs.vimPlugins.nvim-tree-lua;
-    type = "viml";
+    type = "lua";
     config = ''
-      ${prelude.mkLuaCode ''
-        require('nvim-tree').setup {
-          git = {
-            ignore = false,
-          },
-          renderer = {
-            icons = {
-              show = {
-                file = false,
-                folder = false,
-                folder_arrow = false,
-                git = false,
-              }
-            },
-            indent_markers = {
-              enable = true,
-              inline_arrows = true,
-              icons = {
-                corner = "└",
-                edge = "│",
-                item = "│",
-                bottom = "─",
-                none = " ",
-              },
+      require("nvim-tree").setup({
+        filters = { git_ignored = false },
+        update_focused_file = { enable = true },
+        view = { width = { min = 30 } },
+        renderer = {
+          highlight_git = "name",
+          indent_markers = { enable = true },
+          icons = {
+            show = {
+              folder_arrow = false,
+              git = false,
             },
           },
-          hijack_directories  = {
-            enable = true,
-            auto_open = true,
-          },
-          open_on_tab         = false,
-          hijack_cursor       = false,
-          update_cwd          = false,
-          update_focused_file = {
-            enable      = true,
-            update_cwd  = false,
-            ignore_list = {}
-          },
-          view = {
-            adaptive_size = true,
-            width = 30,
-            side = 'left',
-          }
-        }
-      ''}
+        },
+      })
 
-      nnoremap tn <cmd>NvimTreeToggle<cr>
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle file explorer" })
     '';
   };
 in

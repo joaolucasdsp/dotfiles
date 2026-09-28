@@ -3,13 +3,12 @@
 let
   todo-comments = {
     plugin = pkgs.vimPlugins.todo-comments-nvim;
-    type = "viml";
+    type = "lua";
     config = ''
-      nnoremap <leader>pt <cmd>TodoQuickFix<cr>
-      lua require('todo-comments').setup{}
+      require("todo-comments").setup()
+      vim.keymap.set("n", "<leader>pt", "<cmd>TodoQuickFix<cr>", { desc = "List project TODOs" })
     '';
   };
-
 in
 {
   programs.neovim.plugins = [ todo-comments ];
