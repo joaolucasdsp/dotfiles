@@ -26,6 +26,7 @@
     nb
     proton-pass-cli
     bruno
+    forgejo-cli
   ];
 
   programs.bash.shellAliases.rb = "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";
