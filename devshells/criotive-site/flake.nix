@@ -17,6 +17,16 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+
+          # O nixpkgs empacota o dotnet-ef 10.0.9, mas o projeto está no EF Core
+          # 8.0.10 e a ferramenta precisa acompanhar o runtime. Mesma receita do
+          # nixpkgs, só que presa na versão certa.
+          dotnet-ef_8 = pkgs.buildDotnetGlobalTool {
+            pname = "dotnet-ef";
+            version = "8.0.10";
+            dotnet-sdk = pkgs.dotnet-sdk_8;
+            nugetHash = "sha256-J12XiJquBNUp3OwHdv43hIFoaJ9dz2P6BEIzgZf+w0I=";
+          };
         in
         {
           default = pkgs.mkShell {
@@ -27,6 +37,7 @@
               # O docker é o do sistema (Fedora), mas ele vem sem o plugin
               # compose; este pacote entra pelo DOCKER_CONFIG do shellHook.
               docker-compose
+              dotnet-ef_8 # `dotnet ef migrations add ...`
               act # scripts/ci-local.sh
               gh # e2e/e2e.sh
               jq
