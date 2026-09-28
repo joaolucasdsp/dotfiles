@@ -26,7 +26,7 @@ in
 {
   imports = [ ./ssh.nix ./sops.nix ];
 
-  programs.ssh.settings."github.com".IdentityAgent = agentSocket;
+  programs.ssh.settings."*".IdentityAgent = agentSocket;
 
   sops.secrets.proton-pass-pat = { };
 
