@@ -27,6 +27,7 @@
     proton-pass-cli
     bruno
     forgejo-cli
+    lazydocker
   ];
 
   programs.bash.shellAliases.rb = "nix build .#homeConfigurations.${configurationName}.activationPackage && ./result/activate";

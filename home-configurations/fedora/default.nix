@@ -5,6 +5,7 @@
     ../linux
     ../../modules/proton.nix
     ../../modules/sway
+    ../../modules/niri
     ../../modules/kitty.nix
     ../../modules/waybar
     ../../modules/dunst.nix
