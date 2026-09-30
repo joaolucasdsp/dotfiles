@@ -36,6 +36,14 @@
           stateVersion = "25.05";
         };
 
+        omarchy = {
+          system = "x86_64-linux";
+          name = "omarchy";
+          username = "codando";
+          homeDirectory = "/home/codando";
+          stateVersion = "25.05";
+        };
+
         macos = {
           system = "aarch64-darwin";
           name = "macos";

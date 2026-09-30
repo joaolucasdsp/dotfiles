@@ -1,6 +1,7 @@
 # Dotfiles
 
-Personal WSL dotfiles managed with Nix flakes and Home Manager.
+Personal dotfiles managed with Nix flakes and Home Manager, for WSL, Fedora,
+Omarchy (Arch + Hyprland) and macOS.
 
 ## Bootstrap
 
@@ -19,6 +20,15 @@ From Fedora:
 git clone git@github.com:joaolucasdp/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 nix build .#homeConfigurations.fedora.activationPackage
+./result/activate
+```
+
+From Omarchy:
+
+```sh
+git clone git@github.com:joaolucasdp/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+nix build .#homeConfigurations.omarchy.activationPackage
 ./result/activate
 ```
 
@@ -43,11 +53,11 @@ direnv allow
 
 ```sh
 cd ~/dotfiles
-nix build .#homeConfigurations.wsl.activationPackage
+nix build .#homeConfigurations.<profile>.activationPackage
 ./result/activate
 ```
 
-The `rb` shell alias runs the same build and activation flow.
+The `rb` shell alias runs the same build and activation flow for the current profile.
 
 ## Validate
 
@@ -56,7 +66,8 @@ nix fmt
 nix flake check
 ```
 
-`nix flake check` builds the WSL Home Manager activation package through the configured flake checks.
+`nix flake check` builds the Home Manager activation package of every profile
+for the current system through the configured flake checks.
 
 ## Templates
 
@@ -83,17 +94,27 @@ cargo init --bin --name math_eval
 cargo run
 ```
 
+## Layout
+
+- `flake.nix` declares the profiles; `lib/` holds `mkHome`, which builds each
+  one from `home-configurations/<name>`.
+- `home-configurations/common` is shared by every profile; `linux` adds the
+  Linux-only shell bits and is the base of `wsl`, `fedora` and `omarchy`.
+- `modules/` holds one Home Manager module per program or concern.
+- `templates/` are `nix flake init` templates; `devshells/` are standalone
+  flakes for specific projects.
+- `secrets/` holds sops-encrypted secrets (see `.sops.yaml`).
+
 ## Notes
 
-- Git commit signing uses SSH signing backed by the configured Bitwarden SSH agent flow.
-- macOS uses the Bitwarden SSH Agent socket at `~/.bitwarden-ssh-agent.sock`.
-- The WSL profile is defined in `home-configurations/wsl`.
-- The macOS profile is defined in `home-configurations/macos`.
-- The Fedora profile is defined in `home-configurations/fedora` and ships the
-  Proton suite (`pkgs/proton.nix`): VPN, Pass, Mail/Calendar and Authenticator.
+- SSH and Git commit signing go through the Proton Pass SSH agent
+  (`modules/ssh.nix`), linked at `~/.ssh/proton-pass-agent.sock`.
+- On WSL and Fedora, `modules/proton-pass-login.nix` restores the `pass-cli`
+  session from a sops-encrypted personal access token. Omarchy doesn't use it
+  yet: run `pass-cli login` once there.
+- The Fedora profile ships the Proton suite (`modules/proton.nix`): VPN, Pass,
+  Mail/Calendar and Authenticator.
 - Proton VPN drives the host NetworkManager over D-Bus, so it needs
   `NetworkManager` running on the Fedora side; Nix only provides the client.
-- Existing package-oriented Home Manager modules live in `pkgs`; standalone
-  option modules live in `modules`.
-- Free Claude Code is enabled in the common profile; package and module details
-  are documented in [`pkgs/free-claude-code/README.md`](pkgs/free-claude-code/README.md).
+- On Omarchy, Hyprland, the bar, notifications and theming stay with Omarchy;
+  the profile only adds the shell/editor tooling and rofi.
