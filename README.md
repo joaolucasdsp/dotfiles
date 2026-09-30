@@ -110,8 +110,9 @@ cargo run
 - SSH and Git commit signing go through the Proton Pass SSH agent
   (`modules/ssh.nix`), linked at `~/.ssh/proton-pass-agent.sock`.
 - On WSL and Fedora, `modules/proton-pass-login.nix` restores the `pass-cli`
-  session from a sops-encrypted personal access token. Omarchy doesn't use it
-  yet: run `pass-cli login` once there.
+  session from a sops-encrypted personal access token. Omarchy stores the
+  session key in gnome-keyring instead (`PROTON_PASS_LINUX_KEYRING=dbus`), so it
+  survives reboots after a single `pass-cli login`.
 - The Fedora profile ships the Proton suite (`modules/proton.nix`): VPN, Pass,
   Mail/Calendar and Authenticator.
 - Proton VPN drives the host NetworkManager over D-Bus, so it needs

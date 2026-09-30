@@ -3,8 +3,6 @@
 # Omarchy (Arch + Hyprland). Hyprland, the bar, notifications and theming stay
 # with Omarchy; this profile brings the shell/editor tooling and rofi.
 {
-  # No proton-pass-login.nix yet: log in once with `pass-cli login` until the
-  # age key is on this machine.
   imports = [
     ../linux
     ../../modules/rofi
@@ -17,6 +15,20 @@
     [[ -r /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
     [[ $- == *i* ]] && source "''${OMARCHY_PATH:-/usr/share/omarchy}/default/bash/rc"
   '';
+
+  # pass-cli keeps its session key in the kernel keyring by default, which is
+  # wiped on reboot. Omarchy's gnome-keyring (unlocked at login) keeps it across
+  # boots instead, so a single `pass-cli login` is enough and this profile
+  # doesn't need proton-pass-login.nix and its sops-stored token.
+  home.sessionVariables.PROTON_PASS_LINUX_KEYRING = "dbus";
+  systemd.user.services.proton-pass-agent = {
+    # Keep retrying while the keyring is still coming up at login.
+    Unit.StartLimitIntervalSec = 0;
+    Service = {
+      Environment = [ "PROTON_PASS_LINUX_KEYRING=dbus" ];
+      RestartSec = 5;
+    };
+  };
 
   # ssh-keygen (git commit signing) reads SSH_AUTH_SOCK, not the ssh config.
   home.sessionVariables.SSH_AUTH_SOCK = "${config.home.homeDirectory}/.ssh/proton-pass-agent.sock";
