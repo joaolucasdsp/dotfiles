@@ -3,6 +3,7 @@
 {
   imports = [
     ../linux
+    ../../modules/proton-pass-login.nix
   ];
 
   home.packages = with pkgs; [

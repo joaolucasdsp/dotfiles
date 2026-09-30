@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  agentSocket = "${config.home.homeDirectory}/.ssh/proton-pass-agent.sock";
   passCli = lib.getExe' config.services.proton-pass-agent.package "pass-cli";
   patFile = config.sops.secrets.proton-pass-pat.path;
 
@@ -24,9 +23,9 @@ let
   '';
 in
 {
+  # Restores the pass-cli session from a sops-encrypted PAT, so the agent from
+  # ssh.nix comes up unattended. Needs the age key (see .sops.yaml).
   imports = [ ./ssh.nix ./sops.nix ];
-
-  programs.ssh.settings."*".IdentityAgent = agentSocket;
 
   sops.secrets.proton-pass-pat = { };
 
@@ -56,8 +55,4 @@ in
     };
     Service.RestartSec = 30;
   };
-
-  home.activation.protonPassAgentSocket = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ln -sfn "''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/proton-pass-agent" "${agentSocket}"
-  '';
 }

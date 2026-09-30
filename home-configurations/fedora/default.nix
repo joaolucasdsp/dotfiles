@@ -3,6 +3,7 @@
 {
   imports = [
     ../linux
+    ../../modules/proton-pass-login.nix
     ../../modules/proton.nix
     ../../modules/sway
     ../../modules/niri
@@ -22,7 +23,6 @@
     #claude-code
     nodejs_22
     gitkraken
-    proton-pass-cli
     lazygit
   ];
 

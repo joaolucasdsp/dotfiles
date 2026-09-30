@@ -1,6 +1,6 @@
 # Adapted from https://github.com/LoneWolf4713/new-wave
 #
-# Managed by home-manager (pkgs/sway/default.nix). Uses the system's sway
+# Managed by home-manager (modules/sway/default.nix). Uses the system's sway
 # package (Fedora Sway Spin) rather than nixpkgs' — see the comment in
 # default.nix on why.
 
@@ -158,19 +158,19 @@ gaps outer 3
 gaps top 6
 
 # Titlebar font (only shows in tabbed/stacking layouts). JetBrainsMono Nerd
-# Font is already installed for kitty/waybar glyphs (see pkgs/theme).
+# Font is already installed for kitty/waybar glyphs (see modules/theme.nix).
 font pango:JetBrainsMono Nerd Font 10
 titlebar_padding 6 3
 titlebar_border_thickness 0
 
 # Bar and notifications: waybar and dunst are started as systemd user
-# services (see pkgs/waybar and pkgs/dunst), not execed from here.
+# services (see modules/waybar and modules/dunst.nix), not execed from here.
 
 # GTK theme, icon theme, cursor: managed declaratively via home-manager's
-# gtk / home.pointerCursor modules (see pkgs/theme), not gsettings execs.
+# gtk / home.pointerCursor modules (see modules/theme.nix), not gsettings execs.
 
 # MPD, mpdscrobble, mpd-lyricsd, mpd-notify all run as systemd user
-# services now (see pkgs/music), not execed here.
+# services now (see modules/music), not execed here.
 exec --no-startup-id kitty --class ncmpcpp "ncmpcpp"
 
 assign [app_id="Spotify"] workspace number 4

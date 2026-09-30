@@ -1,5 +1,5 @@
-/* Catppuccin Mocha — kept in sync with kitty (pkgs/kitty) and the sway
-   window borders / output bg (pkgs/sway/config), so the whole rice reads as
+/* Catppuccin Mocha — kept in sync with kitty (modules/kitty.nix) and the sway
+   window borders / output bg (modules/sway/config), so the whole rice reads as
    one theme. */
 @define-color base     #1e1e2e;
 @define-color mantle   #181825;

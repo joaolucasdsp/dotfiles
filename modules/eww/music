@@ -27,7 +27,7 @@ Control="MPD"
 Cover=/tmp/cover.png
 # if cover not found in metadata use this instead
 # (fallback.png didn't ship with the original rice repo either - a 1x1
-# placeholder is included alongside this script, see pkgs/eww/default.nix)
+# placeholder is included alongside this script, see modules/eww/default.nix)
 bkpCover=~/.config/eww/fallback.png
 # mpd music directory
 mpddir=~/Music
