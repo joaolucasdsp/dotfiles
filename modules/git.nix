@@ -41,8 +41,11 @@ in
     };
 
     settings = {
-      user.name = "codando";
-      user.email = "joaop.dev@codando.tech";
+      # git@codando.io é o endereço só de commits da Codando, que também assina
+      # o trabalho PJ para a criotive. Pode ser trocado se for coletado por spam
+      # sem mexer no endereço de contato.
+      user.name = "johnp";
+      user.email = "git@codando.io";
       core.editor = "vim";
       core.sshCommand = "ssh";
       pull.rebase = true;
@@ -92,7 +95,7 @@ in
     '';
 
     ".ssh/allowed_signers".text = ''
-      joaolwork@gmail.com ${signingKey}
+      joaolwork@gmail.com,joaop.dev@codando.tech,git@codando.io ${signingKey}
     '';
   };
 
