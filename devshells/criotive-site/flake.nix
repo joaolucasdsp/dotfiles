@@ -1,5 +1,5 @@
 {
-  description = "Ambiente de desenvolvimento do criotive/site (.NET 8 + Node + Docker)";
+  description = "Ambiente de desenvolvimento do criotive/site (.NET 10 SDK + Node + Docker)";
 
   # Mesmo rev de nixpkgs que o resto da máquina usa, para compartilhar closure
   # e não abrir uma segunda árvore de pacotes só para este projeto.
@@ -31,8 +31,8 @@
         {
           default = pkgs.mkShell {
             packages = with pkgs; [
-              # global.json pede sdk 8.0.0 com rollForward latestFeature.
-              dotnet-sdk_8
+              # global.json pede sdk 10.0.100 com rollForward latestFeature.
+              dotnet-sdk_10
               nodejs_22
               # O docker é o do sistema (Fedora), mas ele vem sem o plugin
               # compose; este pacote entra pelo DOCKER_CONFIG do shellHook.
@@ -44,7 +44,7 @@
             ];
 
             # O dotnet do nix não se acha sozinho sem DOTNET_ROOT.
-            DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
+            DOTNET_ROOT = "${pkgs.dotnet-sdk_10}";
             DOTNET_CLI_TELEMETRY_OPTOUT = "1";
             DOTNET_NOLOGO = "1";
 
