@@ -33,6 +33,12 @@
   # ssh-keygen (git commit signing) reads SSH_AUTH_SOCK, not the ssh config.
   home.sessionVariables.SSH_AUTH_SOCK = "${config.home.homeDirectory}/.ssh/proton-pass-agent.sock";
 
+  # Node (Claude Code MCP clients) doesn't trust the ASP.NET dev certificate on
+  # https://localhost; export it with `dotnet dev-certs https --format PEM`.
+  # Set for systemd too, so apps launched by Hyprland (Claude Desktop) see it.
+  home.sessionVariables.NODE_EXTRA_CA_CERTS = "${config.home.homeDirectory}/.aspnet/https/aspnetcore-dev.pem";
+  systemd.user.sessionVariables.NODE_EXTRA_CA_CERTS = config.home.sessionVariables.NODE_EXTRA_CA_CERTS;
+
   home.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
