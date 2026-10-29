@@ -7,11 +7,19 @@ let
     rev = "b16b183f6bf0029b9714b0e0178b6bd28eda52f3";
     sha256 = "sha256-Yu4X7SDlu6sbIuO5rerjEcvfExYFBMymmBXIvYD7eqg=";
   };
-  tab-completion = pkgs.fetchFromGitHub {
-    owner = "lincheney";
-    repo = "fzf-tab-completion";
-    rev = "53eb325f573265a6105c9bd0aa56cd865c4e14b7";
-    sha256 = "sha256-hvlz8/mdg9spKy2RLhqPukqdawd9+MEvW31smCsuUhA=";
+  tab-completion = pkgs.applyPatches {
+    src = pkgs.fetchFromGitHub {
+      owner = "lincheney";
+      repo = "fzf-tab-completion";
+      rev = "53eb325f573265a6105c9bd0aa56cd865c4e14b7";
+      sha256 = "sha256-hvlz8/mdg9spKy2RLhqPukqdawd9+MEvW31smCsuUhA=";
+    };
+    # Completers sem `-o filenames` (ex.: `complete -o default`) deixavam um
+    # espaço depois de "dir/", impedindo de seguir digitando o caminho.
+    postPatch = ''
+      substituteInPlace bash/fzf-bash-completion.sh \
+        --replace-fail '[[ "$compl_filenames" == *1* ]] && COMPREPLY=' 'COMPREPLY='
+    '';
   };
   ble-sh = pkgs.fetchFromGitHub {
     owner = "akinomyoga";
